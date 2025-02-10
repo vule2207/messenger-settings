@@ -110,7 +110,7 @@ export async function axiosAPI<T>(
   }
 
   try {
-    const response: AxiosResponse<T> = await axiosApi(config);
+    const response = await axiosApi<T>(config);
     return response?.data;
   } catch (error) {
     console.log(error);

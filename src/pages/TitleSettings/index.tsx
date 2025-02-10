@@ -20,12 +20,20 @@ const getTitle = async (prevTitle: string) => {
 };
 const TitleSettings = () => {
   const { t } = useTranslation();
-  const [title, setTitle, isPending] = useActionState<string>(getTitle, '');
-  console.log('title:', title);
+  // const [title, setTitle, isPending] = useActionState<string>(getTitle, '');
+  // console.log('title:', title);
 
-  // useEffect(() => {
-  //   setTitle();
-  // }, []);
+  const getTitle = async () => {
+    const data = await axiosGet<BaseResponse<string>>(apiURL.titleSettings.data);
+    if (data?.success && data.rows) {
+      console.log('data:', data);
+      // return data.rows;
+    }
+  };
+
+  useEffect(() => {
+    getTitle();
+  }, []);
 
   return (
     <div className='flex-grow'>
