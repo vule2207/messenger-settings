@@ -54,3 +54,16 @@ export const routes = [
     element: <>Setting Permission for Kick-Out</>,
   },
 ];
+
+import { useRoutes } from 'react-router-dom';
+
+import LoginRoutes from './LoginRoutes';
+import { useAuthorizedRoutes } from './useAuthorizedRoutes';
+
+function AppRoutes() {
+  const authorizedRoutes = useAuthorizedRoutes();
+
+  return useRoutes([authorizedRoutes, LoginRoutes]);
+}
+
+export default AppRoutes;

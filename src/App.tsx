@@ -1,20 +1,16 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import PageLayout from '@/layouts/PageLayout';
+import AppRoutes from '@/routes';
 import '@/utils/i18n';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import { routes } from '@/routes';
+import { GroupwareAuthProvider } from './contexts/GroupwareAuthContext';
+import { isDevelopment } from './utils';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<PageLayout />}>
-          <Route path={'/'} element={<Navigate to='/messenger/title' replace />} />
-          {routes.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Route>
-      </Routes>
+    <BrowserRouter basename={isDevelopment() ? '/' : import.meta.env.VITE_PUBLIC_URL}>
+      <GroupwareAuthProvider>
+        <AppRoutes />
+      </GroupwareAuthProvider>
     </BrowserRouter>
   );
 }

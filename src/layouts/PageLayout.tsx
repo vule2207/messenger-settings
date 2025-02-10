@@ -1,13 +1,24 @@
 import AppSidebar from '@/components/AppSidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { typograhyClass } from '@/constants';
+import { routes } from '@/routes';
 import { useAppStore } from '@/store';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 const PageLayout = () => {
+  const { pathname } = useLocation();
   const { t } = useTranslation();
-  const { currentMenu } = useAppStore();
+  const { currentMenu, setCurrentMenu } = useAppStore();
+
+  useEffect(() => {
+    const cMenu = routes.find((route) => pathname.includes(route.path));
+    if (cMenu) {
+      setCurrentMenu({ title: cMenu.title, url: cMenu.path });
+    }
+  }, [pathname]);
+
   return (
     <SidebarProvider>
       <AppSidebar />

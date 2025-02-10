@@ -1,7 +1,7 @@
 import { NavigateFunction } from 'react-router';
 
 import axios, { AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios';
-import { getBaseUrl, getGroupwareUrl } from '..';
+import { getBaseUrl, getGroupwareUrl } from '@/utils';
 import isEmpty from 'lodash/isEmpty';
 import merge from 'lodash/merge';
 
@@ -27,6 +27,7 @@ export const axiosApi = axios.create({
   withCredentials: true,
 });
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export const setupInterceptors = (navigate: NavigateFunction) => {
   axiosApi.interceptors.request.use((config: any) => {
     // const token = localStorage.getItem('token')
@@ -136,11 +137,15 @@ export async function axiosGet<T>(
   }
 
   try {
-    const response: AxiosResponse<T> = await axiosApi(config);
+    const response = await axiosApi<T>(config);
     return response?.data;
   } catch (error) {
-    console.log(error);
-    return error;
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.response?.data || error.message);
+      return null;
+    }
+    console.error('Unexpected error:', error);
+    return null;
   }
 }
 
@@ -166,11 +171,15 @@ export async function axiosPost<T>(
   }
 
   try {
-    const response: AxiosResponse<T> = await axiosApi(config);
+    const response = await axiosApi<T>(config);
     return response?.data;
   } catch (error) {
-    console.log(error);
-    return error;
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.response?.data || error.message);
+      return null;
+    }
+    console.error('Unexpected error:', error);
+    return null;
   }
 }
 
@@ -196,11 +205,15 @@ export async function axiosDel<T>(
   }
 
   try {
-    const response: AxiosResponse<T> = await axiosApi(config);
+    const response = await axiosApi<T>(config);
     return response?.data;
   } catch (error) {
-    console.log(error);
-    return error;
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.response?.data || error.message);
+      return null;
+    }
+    console.error('Unexpected error:', error);
+    return null;
   }
 }
 
@@ -226,11 +239,15 @@ export async function axiosPut<T>(
   }
 
   try {
-    const response: AxiosResponse<T> = await axiosApi(config);
+    const response = await axiosApi<T>(config);
     return response?.data;
   } catch (error) {
-    console.log(error);
-    return error;
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.response?.data || error.message);
+      return null;
+    }
+    console.error('Unexpected error:', error);
+    return null;
   }
 }
 
@@ -253,10 +270,14 @@ export async function axiosPatch<T>(
   }
 
   try {
-    const response: AxiosResponse<T> = await axiosApi(config);
+    const response = await axiosApi<T>(config);
     return response?.data;
   } catch (error) {
-    console.log(error);
-    return error;
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.response?.data || error.message);
+      return null;
+    }
+    console.error('Unexpected error:', error);
+    return null;
   }
 }

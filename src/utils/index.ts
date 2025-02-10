@@ -1,9 +1,13 @@
+export const checkPostmaster = (sessionId: string) => {
+  return sessionId && sessionId == 'postmaster';
+};
+
 export const isDevelopment = () => {
   const locationInfo = window.location;
   const { hostname } = locationInfo;
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return true;
-  } else if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  } else if (!import.meta.env.MODE || import.meta.env.MODE === 'development') {
     return true;
   } else {
     return false;
@@ -14,7 +18,7 @@ export const getBaseUrl = (defaultHost: string = '') => {
   const locationInfo = window.location;
   const { host } = locationInfo;
   if (isDevelopment()) {
-    const baseUrlArr = process.env.REACT_APP_BASE_URL?.split('/');
+    const baseUrlArr = import.meta.env.VITE_REACT_APP_BASE_URL?.split('/');
     if (baseUrlArr) {
       return 'https://' + baseUrlArr?.[2];
     } else {
@@ -30,7 +34,7 @@ export const getBaseUrl = (defaultHost: string = '') => {
 export const getGroupwareUrl = () => {
   let locationInfo = window.location;
   if (isDevelopment()) {
-    return process.env.REACT_APP_BASE_URL || 'https://vndev.hanbiro.com/ngw';
+    return import.meta.env.VITE_REACT_APP_BASE_URL || 'https://vndev.hanbiro.com/ngw';
   } else {
     if (window.location !== window.parent.location) {
       locationInfo = window.parent.location;

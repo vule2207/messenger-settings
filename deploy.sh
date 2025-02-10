@@ -10,12 +10,12 @@ SSH_PORT=22
 DEPLOY_FILE="build-`date +'%Y-%m-%d-%H%M%S'`.zip"
 DEPLOY_SOURCE_LOCAL="./tmp/${DEPLOY_FILE}"
 DEPLOY_SOURCE="/home/levu2207"
-DEPLOY_PATH="/home/HanbiroMailcore/docs/groupware-v3/"
+DEPLOY_PATH="/home/HanbiroMailcore/docs/levu2207/messenger-settings/"
 
 # -- Login to server via ssh --
 npm run build
 mkdir -p tmp
-cd ./build && zip -r .${DEPLOY_SOURCE_LOCAL} . && cd .. # Build source
+cd ./dist && zip -r .${DEPLOY_SOURCE_LOCAL} . && cd .. # Build source
 echo "${GREEN}============ Uploading ============${NC}"
 scp -P ${SSH_PORT} ${DEPLOY_SOURCE_LOCAL} ${SSH_USERNAME}@${SSH_HOST}:${DEPLOY_SOURCE} # Upload source
 echo "${GREEN}============ Done Upload ============${NC}"

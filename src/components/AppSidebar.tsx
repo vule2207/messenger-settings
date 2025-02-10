@@ -1,5 +1,5 @@
 import { ChevronRight, MessageCircle } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import {
   Sidebar,
@@ -13,23 +13,12 @@ import {
 } from '@/components/ui/sidebar';
 import { routes } from '@/routes';
 import { useAppStore } from '@/store';
-import { useEffect } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import { useTranslation } from 'react-i18next';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 
 const AppSidebar = () => {
-  const { pathname } = useLocation();
   const { t } = useTranslation();
-  const { currentMenu, setCurrentMenu } = useAppStore();
-
-  useEffect(() => {
-    if (!currentMenu) {
-      const cMenu = routes.find((route) => pathname.includes(route.path));
-      if (cMenu) {
-        setCurrentMenu({ title: cMenu.title, url: cMenu.path });
-      }
-    }
-  }, []);
+  const { currentMenu } = useAppStore();
 
   return (
     <Sidebar className='sidebar-menu'>
@@ -56,14 +45,7 @@ const AppSidebar = () => {
                         asChild
                         className={`!text-base ${currentMenu?.url === route.path ? '!opacity-8 !bg-transparent' : 'text-slate-500'}`}
                       >
-                        <Link
-                          to={route.path}
-                          onClick={() => {
-                            if (currentMenu?.title !== route.path) {
-                              setCurrentMenu({ title: route.title, url: route.path });
-                            }
-                          }}
-                        >
+                        <Link to={route.path}>
                           <span
                             className={`!text-base ${currentMenu?.url === route.path ? 'text-caps_blue !opacity-8 !bg-transparent' : 'text-slate-500'}`}
                           >
