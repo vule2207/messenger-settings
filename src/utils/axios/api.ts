@@ -7,7 +7,7 @@ import merge from 'lodash/merge';
 
 //pass new generated access token here
 // const token = accessToken
-export const Headers = {
+export const HeadersFormData = {
   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
 };
 
@@ -152,9 +152,9 @@ export async function axiosGet<T>(
 /**
  * Post Method
  */
-export async function axiosPost<T>(
+export async function axiosPost<T, V>(
   endPoint: string,
-  payload = {},
+  payload: V,
   headers = {},
   responseType = 'json',
   customConfig: CustomAxiosConfigType = {},

@@ -14,12 +14,10 @@ export const GroupwareAuthProvider = ({ children }: { children: React.ReactEleme
   const { login, logout, loginSuccess, loadingApp } = useUserActions();
   const [cookies] = useCookies();
   const { auth, setAuth } = useAppStore();
-  console.log('auth:', auth);
 
   useEffect(() => {
     const checkIsLoggedIn = async () => {
       if (cookies[COOKIES_HANBIRO_GW] && cookies[COOKIES_HMAIL_KEY]) {
-        console.log('cookies:', cookies);
         // return await loginSuccess();
         setAuth({
           isCheckingLoggedIn: false,

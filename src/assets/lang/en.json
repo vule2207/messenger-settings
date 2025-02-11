@@ -732,6 +732,7 @@
   "approval_messenger_autologin": "Auto-Login",
   "approval_messenger_autologin_detail": "Auto-Login is now ON and Messenger will sign in automatically when PC starts up.(*Applied after re-login.)",
   "approval_messenger_autologonoff": "Auto Time-Punch for Time Card",
+  "approval_messenger_punch_on_work_day": "Restrictions on Day-off & Holidays",
   "approval_messenger_deletetransferfile": "Deleting Transferred Files",
   "approval_messenger_duplicatelogin": "Duplicate Log In",
   "approval_messenger_grouplist_cancel_btn": "Cancel",

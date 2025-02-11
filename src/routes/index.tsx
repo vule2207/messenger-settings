@@ -1,6 +1,8 @@
 import { lazy } from 'react';
 
 const TitleSettingsPage = lazy(() => import('@/pages/TitleSettings'));
+const AutoTimePuchPage = lazy(() => import('@/pages/AutoPunchTimeCard'));
+const AwaySettingsPage = lazy(() => import('@/pages/AwaySettings'));
 
 export const routes = [
   {
@@ -11,7 +13,7 @@ export const routes = [
   {
     title: 'approval_messenger_autologonoff',
     path: 'messenger/autotimepunch',
-    element: <>Auto Time-Punch for Time Card</>,
+    element: <AutoTimePuchPage />,
   },
   {
     title: 'approval_messenger_loginhistory',
@@ -21,7 +23,7 @@ export const routes = [
   {
     title: 'approval_messenger_idletime',
     path: 'messenger/absencetime',
-    element: <>Away Settings</>,
+    element: <AwaySettingsPage />,
   },
   {
     title: 'approval_messenger_locktime',

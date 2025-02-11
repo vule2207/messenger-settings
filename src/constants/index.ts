@@ -1,3 +1,5 @@
+import { TimeOptionsType } from '@/types/state';
+
 // auth
 export const URL_LOGIN = '/sign/auth';
 export const URL_LOGOUT = 'sign/out';
@@ -20,4 +22,27 @@ export const apiURL = {
     data: 'admin/messenger/title',
     save: 'admin/messenger/title_save',
   },
+  autoTimePunch: {
+    data: 'admin/messenger/autotimepunch',
+    save: 'admin/messenger/autotimepunch_save',
+  },
+  awaySettings: {
+    data: 'admin/messenger/absencetime',
+    save: 'admin/messenger/absencetime_save',
+  },
+  lockTime: {
+    data: 'admin/messenger/locktime',
+    save: 'admin/messenger/locktime_save',
+  },
+  lockOffTime: {
+    data: 'admin/messenger/logofftime',
+    save: 'admin/messenger/logofftime_save',
+  },
 };
+
+// time options
+export const timeOptions: TimeOptionsType[] = [
+  { value: '0', label: 'approval_form_useNo' },
+  { value: '1', label: 'approval_messenger_set_server', isTime: true },
+  { value: '-1', label: 'approval_messenger_set_client' },
+];
