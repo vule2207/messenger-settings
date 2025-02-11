@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { timeOptions, typograhyClass } from '@/constants';
 import { TimeSettingsResponseType } from '@/types/response';
+import clsx from 'clsx';
 import { Megaphone, Save } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +35,11 @@ const OptionSelect = ({ data, onSave, note, onChange }: OptionSelectProps) => {
             <RadioGroup className='' value={data.checktype}>
               {timeOptions.map((time) => (
                 <div className='grid grid-cols-1 sm:grid-cols-12 items-center' key={time.value}>
-                  <div className='h-10 sm:col-span-3 flex gap-2 items-center'>
+                  <div
+                    className={clsx('sm:col-span-3 flex gap-2 items-center', {
+                      'h-10': time.isTime && data.checktype,
+                    })}
+                  >
                     <RadioGroupItem
                       value={time.value}
                       id={time.value}

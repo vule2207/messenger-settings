@@ -3,6 +3,8 @@ import { lazy } from 'react';
 const TitleSettingsPage = lazy(() => import('@/pages/TitleSettings'));
 const AutoTimePuchPage = lazy(() => import('@/pages/AutoPunchTimeCard'));
 const AwaySettingsPage = lazy(() => import('@/pages/AwaySettings'));
+const LockTimePage = lazy(() => import('@/pages/LockTime'));
+const LockOffTimePage = lazy(() => import('@/pages/LockOffTime'));
 
 export const routes = [
   {
@@ -28,12 +30,12 @@ export const routes = [
   {
     title: 'approval_messenger_locktime',
     path: 'messenger/locktime',
-    element: <>Lock Time</>,
+    element: <LockTimePage />,
   },
   {
     title: 'approval_messenger_logofftime',
     path: 'messenger/logofftime',
-    element: <>Log Off Time</>,
+    element: <LockOffTimePage />,
   },
   {
     title: 'approval_messenger_duplicatelogin',
