@@ -1,4 +1,6 @@
-import { TimeOptionsType } from '@/types/state';
+import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE, TIME_SETTINGS_VALUE } from '@/types/enums';
+import { DuplicateLogInDataType } from '@/types';
+import { TimeOptionsType } from '@/types';
 
 // auth
 export const URL_LOGIN = '/sign/auth';
@@ -26,6 +28,9 @@ export const apiURL = {
     data: 'admin/messenger/autotimepunch',
     save: 'admin/messenger/autotimepunch_save',
   },
+  history: {
+    list: 'admin/messenger/history',
+  },
   awaySettings: {
     data: 'admin/messenger/absencetime',
     save: 'admin/messenger/absencetime_save',
@@ -38,11 +43,55 @@ export const apiURL = {
     data: 'admin/messenger/logofftime',
     save: 'admin/messenger/logofftime_save',
   },
+  duplicateLogIn: {
+    data: 'admin/messenger/duplicate_login',
+    save: 'admin/messenger/duplicate_login',
+  },
+  deleteTransferfile: {
+    data: 'admin/messenger/crontab_del_transfer',
+    save: 'admin/messenger/crontab_del_transfer',
+    delete: 'admin/messenger/del_transfer_except_thumbnail',
+    getUsedSpace: 'admin/messenger/tranferred_file_used_space',
+  },
+  availableUsersList: {
+    list: 'admin/messenger/list_user_logged',
+  },
 };
 
 // time options
 export const timeOptions: TimeOptionsType[] = [
-  { value: '0', label: 'approval_form_useNo' },
-  { value: '1', label: 'approval_messenger_set_server', isTime: true },
-  { value: '-1', label: 'approval_messenger_set_client' },
+  { value: TIME_SETTINGS_VALUE.DO_NOT_USE, label: 'approval_form_useNo' },
+  {
+    value: TIME_SETTINGS_VALUE.ENABLE_BY_SERVER,
+    label: 'approval_messenger_set_server',
+    isTime: true,
+  },
+  { value: TIME_SETTINGS_VALUE.ENABLE_BY_CLIENT, label: 'approval_messenger_set_client' },
+];
+
+export const duplicateLogInOptions: TimeOptionsType<DuplicateLogInDataType>[] = [
+  { value: DUPLICATE_LOGIN_VALUE.ALL, label: 'admin_messenger_duplicatelogin_device_type_all' },
+  {
+    value: DUPLICATE_LOGIN_VALUE.MOBILE,
+    label: 'admin_messenger_duplicatelogin_device_type_mobile',
+  },
+  { value: DUPLICATE_LOGIN_VALUE.PC, label: 'admin_messenger_duplicatelogin_device_type_pc' },
+];
+
+export const cronTimeOptions: TimeOptionsType<CRON_TIME_VALUE>[] = [
+  { value: CRON_TIME_VALUE.DO_NOT_DELETED, label: 'admin_messenger_del_transferfile_not_delete' },
+  { value: CRON_TIME_VALUE.A_DAY, label: 'admin_messenger_del_transferfile_cron_time_op_a_days' },
+  {
+    value: CRON_TIME_VALUE.THREE_DAY,
+    label: 'admin_messenger_del_transferfile_cron_time_op_three_days',
+  },
+  { value: CRON_TIME_VALUE.A_WEEK, label: 'admin_messenger_del_transferfile_cron_time_op_a_week' },
+  {
+    value: CRON_TIME_VALUE.TWO_WEEKS,
+    label: 'admin_messenger_del_transferfile_cron_time_op_two_weeks',
+  },
+  {
+    value: CRON_TIME_VALUE.A_MONTH,
+    label: 'admin_messenger_del_transferfile_cron_time_op_a_month',
+  },
 ];

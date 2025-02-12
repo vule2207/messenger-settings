@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
+  DialogBody,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -31,11 +32,18 @@ const AlertDialog = (props: AlertDialogProps) => {
       <DialogContent className='sm:max-w-[425px] top-[15%]'>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
-        <span className='text-slate-700'>{content}</span>
+        <DialogBody>
+          <span className='text-slate-700'>{content}</span>
+        </DialogBody>
         <DialogFooter>
-          <Button className='w-[80px]' size={'sm'} onClick={() => setOpen(false)}>
+          <Button
+            variant={'secondary'}
+            className='w-[80px]'
+            size={'sm'}
+            onClick={() => setOpen(false)}
+          >
             {t('common_close_msg')}
           </Button>
         </DialogFooter>

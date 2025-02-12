@@ -4,12 +4,12 @@ import LoadingOverlay from '@/components/LoadingOverlay';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { typograhyClass } from '@/constants';
-import { useGetAutoPunch } from '@/hooks/auto-punch/useGetAutoPunch';
-import { useUpdateAutoPunch } from '@/hooks/auto-punch/useUpdateAutoPunch';
+import { apiURL, typograhyClass } from '@/constants';
+import { useGetSettings } from '@/hooks/useGetSettings';
+import { useUpdateSettings } from '@/hooks/useUpdateSettings';
 import { BaseResponse } from '@/types/api';
-import { PunchDataResponseType } from '@/types/response';
-import { PunchDataType } from '@/types/state';
+import { PunchDataResponseType } from '@/types';
+import { PunchDataType } from '@/types';
 import { Megaphone, Save } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,17 +27,22 @@ const AutoPunchTimeCard = () => {
     content: '',
   });
 
-  const { data, isLoading } = useGetAutoPunch<BaseResponse<PunchDataResponseType>>();
-  const { mutate, isLoading: isUpdating } = useUpdateAutoPunch<BaseResponse>({
-    onSuccess: (data) => {
-      if (data && data.success) {
-        setAlertData({ open: true, title: t('alert_success_msg'), content: data.msg || '' });
-      }
+  const { data, isLoading } = useGetSettings<BaseResponse<PunchDataResponseType>>(
+    apiURL.autoTimePunch.data,
+  );
+  const { mutate, isLoading: isUpdating } = useUpdateSettings<BaseResponse, PunchDataType>(
+    apiURL.autoTimePunch.save,
+    {
+      onSuccess: (data) => {
+        if (data && data.success) {
+          setAlertData({ open: true, title: t('alert_success_msg'), content: data.msg || '' });
+        }
+      },
+      onError: (err) => {
+        console.log('err:', err);
+      },
     },
-    onError: (err) => {
-      console.log('err:', err);
-    },
-  });
+  );
 
   useEffect(() => {
     if (data && data.success && data?.rows) {

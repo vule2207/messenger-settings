@@ -1,6 +1,6 @@
 import { axiosGet } from '@/utils/axios/api';
-import useQuery from './useQuery';
+import useQuery, { QueryOptions } from './useQuery';
 
-export function useGetSettings<TData>(url: string) {
-  return useQuery<TData>(() => axiosGet<TData>(url));
+export function useGetSettings<TData>(url: string, options?: QueryOptions) {
+  return useQuery<TData>(() => axiosGet<TData>(url), options);
 }

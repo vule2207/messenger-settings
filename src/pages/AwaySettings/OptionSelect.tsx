@@ -4,20 +4,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { timeOptions, typograhyClass } from '@/constants';
-import { TimeSettingsResponseType } from '@/types/response';
+import { TimeSettingsResponseType } from '@/types';
 import clsx from 'clsx';
 import { Megaphone, Save } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface OptionSelectProps {
-  onSave: () => void;
-  data: TimeSettingsResponseType;
   note: string;
+  data: TimeSettingsResponseType;
+  isUpdating: boolean;
+  onSave: () => void;
   onChange: Dispatch<SetStateAction<TimeSettingsResponseType>>;
 }
 
-const OptionSelect = ({ data, onSave, note, onChange }: OptionSelectProps) => {
+const OptionSelect = ({ data, onSave, note, onChange, isUpdating }: OptionSelectProps) => {
   const { t } = useTranslation();
   return (
     <>
@@ -55,7 +56,9 @@ const OptionSelect = ({ data, onSave, note, onChange }: OptionSelectProps) => {
                       className='sm:col-span-3 w-auto'
                       value={data.value}
                       type='number'
-                      onChange={() => {}}
+                      onChange={(e) => {
+                        onChange({ ...data, value: e.target.value });
+                      }}
                     />
                   )}
                 </div>
@@ -64,7 +67,7 @@ const OptionSelect = ({ data, onSave, note, onChange }: OptionSelectProps) => {
           </div>
         }
         footer={
-          <Button onClick={onSave} disabled={false}>
+          <Button onClick={onSave} disabled={isUpdating}>
             <Save /> {t('admin_save_msg')}
           </Button>
         }

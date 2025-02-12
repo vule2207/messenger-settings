@@ -16,6 +16,8 @@ interface AppState {
   setAuth: (auth: AuthState) => void;
   currentMenu?: CurrentMenuState;
   setCurrentMenu: (menu: CurrentMenuState) => void;
+  triggerRefresh?: boolean;
+  setRefresh?: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -26,7 +28,12 @@ export const useAppStore = create<AppState>((set) => ({
     token: null,
   },
   setAuth: (auth) => set(() => ({ auth: auth })),
+
   // currentMenu state
   currentMenu: undefined,
   setCurrentMenu: (menu) => set(() => ({ currentMenu: menu })),
+
+  // refresh state
+  triggerRefresh: false,
+  setRefresh: () => set((state) => ({ triggerRefresh: !state.triggerRefresh })),
 }));

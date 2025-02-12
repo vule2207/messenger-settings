@@ -1,5 +1,5 @@
 import AlertDialog, { AlertDialogProps } from '@/components/AlertDialog';
-import { TimeSettingsResponseType } from '@/types/response';
+import { TimeSettingsResponseType } from '@/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import OptionSelect from '../AwaySettings/OptionSelect';
@@ -12,7 +12,7 @@ import LoadingOverlay from '@/components/LoadingOverlay';
 const LockOffTime = () => {
   const { t } = useTranslation();
 
-  const [awayData, setAwayData] = useState<TimeSettingsResponseType>({
+  const [lockOffTime, setLockOffTime] = useState<TimeSettingsResponseType>({
     value: '1',
     checktype: '0',
   });
@@ -23,12 +23,12 @@ const LockOffTime = () => {
   });
 
   const { data, isLoading } = useGetSettings<BaseResponse<TimeSettingsResponseType>>(
-    apiURL.awaySettings.data,
+    apiURL.lockOffTime.data,
   );
   const { mutate, isLoading: isUpdating } = useUpdateSettings<
     BaseResponse,
     TimeSettingsResponseType
-  >(apiURL.awaySettings.save, {
+  >(apiURL.lockOffTime.save, {
     onSuccess: (data) => {
       if (data && data.success) {
         setAlertData({ open: true, title: t('alert_success_msg'), content: data.msg || '' });
@@ -41,21 +41,22 @@ const LockOffTime = () => {
 
   useEffect(() => {
     if (data && data.success && data?.rows) {
-      setAwayData(data.rows);
+      setLockOffTime(data.rows);
     }
   }, [data]);
 
   const handleSave = () => {
-    mutate(awayData);
+    mutate(lockOffTime);
   };
   return (
     <>
       {isLoading && <LoadingOverlay />}
       <OptionSelect
-        data={awayData}
-        note={t('approval_messenger_logofftime_detail')}
+        data={lockOffTime}
         onSave={handleSave}
-        onChange={setAwayData}
+        isUpdating={isUpdating}
+        onChange={setLockOffTime}
+        note={t('approval_messenger_logofftime_detail')}
       />
 
       {alertData.open && (

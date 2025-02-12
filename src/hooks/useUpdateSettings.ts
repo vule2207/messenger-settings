@@ -1,4 +1,3 @@
-import { PunchDataType } from '@/types/state';
 import { axiosPost, HeadersFormData } from '@/utils/axios/api';
 import useMutation, { MutationOptions } from './useMutation';
 

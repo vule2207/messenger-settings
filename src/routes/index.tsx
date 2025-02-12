@@ -1,10 +1,17 @@
 import { lazy } from 'react';
+import { useRoutes } from 'react-router-dom';
+import LoginRoutes from './LoginRoutes';
+import { useAuthorizedRoutes } from './useAuthorizedRoutes';
 
 const TitleSettingsPage = lazy(() => import('@/pages/TitleSettings'));
 const AutoTimePuchPage = lazy(() => import('@/pages/AutoPunchTimeCard'));
+const AccessHistoryPage = lazy(() => import('@/pages/AccessHistory'));
 const AwaySettingsPage = lazy(() => import('@/pages/AwaySettings'));
 const LockTimePage = lazy(() => import('@/pages/LockTime'));
 const LockOffTimePage = lazy(() => import('@/pages/LockOffTime'));
+const DuplicateLogInPage = lazy(() => import('@/pages/DuplicateLogIn'));
+const DeleteTransferFilePage = lazy(() => import('@/pages/DeleteTransferFile'));
+const AvailableUsersListPage = lazy(() => import('@/pages/AvailableUsersList'));
 
 export const routes = [
   {
@@ -20,7 +27,7 @@ export const routes = [
   {
     title: 'approval_messenger_loginhistory',
     path: 'messenger/accesshistory',
-    element: <>Access History</>,
+    element: <AccessHistoryPage />,
   },
   {
     title: 'approval_messenger_idletime',
@@ -40,17 +47,17 @@ export const routes = [
   {
     title: 'approval_messenger_duplicatelogin',
     path: 'messenger/duplicatelogin',
-    element: <>Duplicate Log In</>,
+    element: <DuplicateLogInPage />,
   },
   {
     title: 'approval_messenger_deletetransferfile',
     path: 'messenger/deletetransferfile',
-    element: <>Deleting Transferred Files</>,
+    element: <DeleteTransferFilePage />,
   },
   {
     title: 'approval_messenger_list_users_logedin',
     path: 'messenger/usersloggedin',
-    element: <>Available Users List</>,
+    element: <AvailableUsersListPage />,
   },
   {
     title: 'kick_out_users',
@@ -58,11 +65,6 @@ export const routes = [
     element: <>Setting Permission for Kick-Out</>,
   },
 ];
-
-import { useRoutes } from 'react-router-dom';
-
-import LoginRoutes from './LoginRoutes';
-import { useAuthorizedRoutes } from './useAuthorizedRoutes';
 
 function AppRoutes() {
   const authorizedRoutes = useAuthorizedRoutes();

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 type ApiFunction<TData> = () => Promise<TData | null>;
 
-type QueryOptions = {
+export type QueryOptions = {
   enabled?: boolean;
 };
 

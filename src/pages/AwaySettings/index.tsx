@@ -1,5 +1,5 @@
 import AlertDialog, { AlertDialogProps } from '@/components/AlertDialog';
-import { TimeSettingsResponseType } from '@/types/response';
+import { TimeSettingsResponseType } from '@/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import OptionSelect from './OptionSelect';
@@ -48,14 +48,16 @@ const AwaySettings = () => {
   const handleSave = () => {
     mutate(awayData);
   };
+
   return (
     <>
       {isLoading && <LoadingOverlay />}
       <OptionSelect
         data={awayData}
-        note={t('approval_messenger_idletime_detail')}
         onSave={handleSave}
+        isUpdating={isUpdating}
         onChange={setAwayData}
+        note={t('approval_messenger_idletime_detail')}
       />
 
       {alertData.open && (

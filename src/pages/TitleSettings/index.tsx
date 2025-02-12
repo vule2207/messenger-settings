@@ -1,17 +1,17 @@
 import CardSection from '@/components/CardSection';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { typograhyClass } from '@/constants';
+import { apiURL, typograhyClass } from '@/constants';
 import { Save } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import meesengerTop from '@/assets/images/messenger_top.gif';
+import AlertDialog, { AlertDialogProps } from '@/components/AlertDialog';
 import LoadingOverlay from '@/components/LoadingOverlay';
-import { useGetTitle } from '@/hooks/title/useGetTitle';
-import { useUpdateTitle } from '@/hooks/title/useUpdateTitle';
+import { useGetSettings } from '@/hooks/useGetSettings';
+import { useUpdateSettings } from '@/hooks/useUpdateSettings';
 import { BaseResponse } from '@/types/api';
 import { useEffect, useState } from 'react';
-import AlertDialog, { AlertDialogProps } from '@/components/AlertDialog';
 
 const TitleSettings = () => {
   const { t } = useTranslation();
@@ -22,17 +22,22 @@ const TitleSettings = () => {
     content: '',
   });
 
-  const { data, isLoading, refetch } = useGetTitle<BaseResponse<string>>();
-  const { mutate, isLoading: isUpdating } = useUpdateTitle<BaseResponse>({
-    onSuccess: (data) => {
-      if (data?.success) {
-        setAlertData({ open: true, title: t('alert_success_msg'), content: data.msg || '' });
-      }
+  const { data, isLoading, refetch } = useGetSettings<BaseResponse<string>>(
+    apiURL.titleSettings.data,
+  );
+  const { mutate, isLoading: isUpdating } = useUpdateSettings<BaseResponse, { title: string }>(
+    apiURL.titleSettings.save,
+    {
+      onSuccess: (data) => {
+        if (data?.success) {
+          setAlertData({ open: true, title: t('alert_success_msg'), content: data.msg || '' });
+        }
+      },
+      onError: (err) => {
+        console.log(err);
+      },
     },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  );
 
   useEffect(() => {
     if (data && data.rows) {
