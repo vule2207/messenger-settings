@@ -30,6 +30,8 @@ export const apiURL = {
   },
   history: {
     list: 'admin/messenger/history',
+    export: 'admin/messenger/history_export',
+    exportCheck: 'admin/messenger/history_export_check',
   },
   awaySettings: {
     data: 'admin/messenger/absencetime',

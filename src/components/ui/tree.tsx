@@ -22,22 +22,8 @@ type TreeProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const Tree = React.forwardRef<HTMLDivElement, TreeProps>(
-  (
-    {
-      data,
-      initialSlelectedItemId,
-      onSelectChange,
-      expandAll,
-      folderIcon,
-      itemIcon,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const [selectedItemId, setSelectedItemId] = React.useState<string | undefined>(
-      initialSlelectedItemId,
-    );
+  ({ data, initialSlelectedItemId, onSelectChange, expandAll, folderIcon, itemIcon, className, ...props }, ref) => {
+    const [selectedItemId, setSelectedItemId] = React.useState<string | undefined>(initialSlelectedItemId);
 
     const handleSelectChange = React.useCallback(
       (item: TreeDataItem | undefined) => {
@@ -109,19 +95,7 @@ type TreeItemProps = TreeProps & {
 };
 
 const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
-  (
-    {
-      className,
-      data,
-      selectedItemId,
-      handleSelectChange,
-      expandedItemIds,
-      FolderIcon,
-      ItemIcon,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ className, data, selectedItemId, handleSelectChange, expandedItemIds, FolderIcon, ItemIcon, ...props }, ref) => {
     return (
       <div ref={ref} role='tree' className={className} {...props}>
         <ul>
@@ -139,18 +113,8 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
                         )}
                         onClick={() => handleSelectChange(item)}
                       >
-                        {item.icon && (
-                          <item.icon
-                            className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50'
-                            aria-hidden='true'
-                          />
-                        )}
-                        {!item.icon && FolderIcon && (
-                          <FolderIcon
-                            className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50'
-                            aria-hidden='true'
-                          />
-                        )}
+                        {item.icon && <item.icon className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50' aria-hidden='true' />}
+                        {!item.icon && FolderIcon && <FolderIcon className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50' aria-hidden='true' />}
                         <span className='text-sm truncate'>{item.name}</span>
                       </AccordionTrigger>
                       <AccordionContent className='pl-6'>
@@ -166,23 +130,13 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
                     </AccordionPrimitive.Item>
                   </AccordionPrimitive.Root>
                 ) : (
-                  <Leaf
-                    item={item}
-                    isSelected={selectedItemId === item.id}
-                    onClick={() => handleSelectChange(item)}
-                    Icon={ItemIcon}
-                  />
+                  <Leaf item={item} isSelected={selectedItemId === item.id} onClick={() => handleSelectChange(item)} Icon={ItemIcon} />
                 )}
               </li>
             ))
           ) : (
             <li>
-              <Leaf
-                item={data}
-                isSelected={selectedItemId === data.id}
-                onClick={() => handleSelectChange(data)}
-                Icon={ItemIcon}
-              />
+              <Leaf item={data} isSelected={selectedItemId === data.id} onClick={() => handleSelectChange(data)} Icon={ItemIcon} />
             </li>
           )}
         </ul>
@@ -211,12 +165,8 @@ const Leaf = React.forwardRef<
       )}
       {...props}
     >
-      {item.icon && (
-        <item.icon className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50' aria-hidden='true' />
-      )}
-      {!item.icon && Icon && (
-        <Icon className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50' aria-hidden='true' />
-      )}
+      {item.icon && <item.icon className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50' aria-hidden='true' />}
+      {!item.icon && Icon && <Icon className='h-4 w-4 shrink-0 mr-2 text-accent-foreground/50' aria-hidden='true' />}
       <span className='flex-grow text-sm truncate'>{item.name}</span>
     </div>
   );
@@ -229,10 +179,7 @@ const AccordionTrigger = React.forwardRef<
   <AccordionPrimitive.Header>
     <AccordionPrimitive.Trigger
       ref={ref}
-      className={cn(
-        'flex flex-1 w-full items-center py-2 transition-all last:[&[data-state=open]>svg]:rotate-90',
-        className,
-      )}
+      className={cn('flex flex-1 w-full items-center py-2 transition-all last:[&[data-state=open]>svg]:rotate-90', className)}
       {...props}
     >
       {children}

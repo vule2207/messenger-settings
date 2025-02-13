@@ -2553,5 +2553,6 @@
   "common_move": "Move",
   "mail_sent_fail": "Send Fail",
   "mail_sent_success": "Sent Success",
-  "kick_out_users": "Kick-out Users"
+  "kick_out_users": "Kick-out Users",
+  "setting_for_kick_out_permission": "Setting Permission for Kick-Out<br>(Only authorized users can kick out other chat participants from the chat room.)"
 }

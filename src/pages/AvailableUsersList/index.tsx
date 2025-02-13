@@ -5,7 +5,7 @@ import { useGetSettings } from '@/hooks/useGetSettings';
 import { useAppStore } from '@/store';
 import { AvailableUserItemType } from '@/types';
 import { BaseResponse } from '@/types/api';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const AvailableUsersList = () => {
@@ -13,6 +13,7 @@ const AvailableUsersList = () => {
 
   const { triggerRefresh } = useAppStore();
 
+  const userListRef = useRef<AvailableUserItemType[]>(null);
   const [userList, setUserList] = useState<AvailableUserItemType[]>([]);
 
   const { data, isLoading, refetch } = useGetSettings<BaseResponse<AvailableUserItemType[]>>(
@@ -22,11 +23,14 @@ const AvailableUsersList = () => {
   useEffect(() => {
     if (data && data.success && data.rows) {
       setUserList(data.rows);
+      if (!userListRef.current) {
+        userListRef.current = data.rows;
+      }
     }
   }, [data]);
 
   useEffect(() => {
-    refetch();
+    userList.length > 0 && refetch();
   }, [triggerRefresh]);
 
   const heads: TableHeadType[] = [
@@ -57,7 +61,21 @@ const AvailableUsersList = () => {
   return (
     <>
       {isLoading && <LoadingOverlay />}
-      <BaseTable heads={heads} rows={rows} footer={footer} />
+      <BaseTable
+        isSearch
+        heads={heads}
+        rows={rows}
+        footer={footer}
+        searchProps={{
+          onChange: (val) => {
+            const nUserList =
+              userListRef.current?.filter((user) =>
+                Object.values(user).some((item) => item.toString().toLowerCase().includes(val)),
+              ) || [];
+            setUserList(nUserList);
+          },
+        }}
+      />
     </>
   );
 };

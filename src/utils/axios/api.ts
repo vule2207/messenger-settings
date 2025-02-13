@@ -118,9 +118,9 @@ export async function axiosAPI<T>(
   }
 }
 
-export async function axiosGet<T>(
+export async function axiosGet<T, V = any>(
   endPoint: string,
-  payload = {},
+  payload: V,
   headers = {},
   responseType = 'json',
   customConfig: CustomAxiosConfigType = {},
@@ -128,7 +128,7 @@ export async function axiosGet<T>(
   let config: AxiosRequestConfig<any> = {
     method: 'GET',
     url: endPoint as string,
-    params: payload,
+    params: payload || {},
     headers: headers,
     responseType: responseType as ResponseType,
   };

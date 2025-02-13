@@ -61,6 +61,7 @@ export const routes = [
   },
   {
     title: 'kick_out_users',
+    subTitle: 'setting_for_kick_out_permission',
     path: 'messenger/kickoutuser',
     element: <>Setting Permission for Kick-Out</>,
   },

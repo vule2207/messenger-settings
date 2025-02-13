@@ -24,6 +24,7 @@ const TitleSettings = () => {
 
   const { data, isLoading, refetch } = useGetSettings<BaseResponse<string>>(
     apiURL.titleSettings.data,
+    {},
   );
   const { mutate, isLoading: isUpdating } = useUpdateSettings<BaseResponse, { title: string }>(
     apiURL.titleSettings.save,

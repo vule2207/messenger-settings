@@ -19,7 +19,7 @@ const PageLayout = () => {
   useEffect(() => {
     const cMenu = routes.find((route) => pathname.includes(route.path));
     if (cMenu) {
-      setCurrentMenu({ title: cMenu.title, url: cMenu.path });
+      setCurrentMenu({ title: cMenu.subTitle || cMenu.title, url: cMenu.path });
     }
   }, [pathname]);
 
@@ -31,14 +31,10 @@ const PageLayout = () => {
         <div className='flex flex-col w-full h-full pt-3 px-8 pb-10 rounded-3xl bg-slate-50'>
           <div className='flex justify-between items-center'>
             <h2 className='py-5'>
-              <span className={typograhyClass.titleHeader}>{t(currentMenu?.title || '')}</span>
+              <span dangerouslySetInnerHTML={{ __html: t(currentMenu?.title || '') }} className={typograhyClass.titleHeader}></span>
             </h2>
             {showRefreshBtn && (
-              <Button
-                variant={'secondary'}
-                className='px-3'
-                onClick={() => setRefresh && setRefresh()}
-              >
+              <Button variant={'secondary'} className='px-3 text-slate-700' onClick={() => setRefresh && setRefresh()}>
                 <RefreshCcw />
               </Button>
             )}

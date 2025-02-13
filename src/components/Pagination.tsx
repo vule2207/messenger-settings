@@ -10,36 +10,38 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 
-interface PaginationProps {
+export interface PaginationProps {
   totalPages: number;
-  initialPage?: number;
+  currentPage: number;
+  pageLimit: number;
   onPageChange?: (page: number) => void;
   onPageLimitChange?: (limit: number) => void;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   totalPages,
-  initialPage = 1,
+  currentPage = 1,
+  pageLimit = 20,
   onPageChange,
   onPageLimitChange,
 }) => {
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [pageLimit, setPageLimit] = useState(5);
+  // const [currentPage, setCurrentPage] = useState(initialPage);
+  // const [pageLimit, setPageLimit] = useState(5);
 
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
+    // setCurrentPage(page);
     onPageChange?.(page);
   };
 
   const handlePageLimitChange = (limit: number) => {
-    setPageLimit(limit);
+    // setPageLimit(limit);
     onPageLimitChange?.(limit);
   };
 
   const renderPageNumbers = () => {
     const pages = [];
-    const showEllipsis = totalPages > 10;
+    const showEllipsis = totalPages > 5;
 
     for (let i = 1; i <= totalPages; i++) {
       if (showEllipsis && i > 2 && i < totalPages - 1 && Math.abs(i - currentPage) > 2) {
@@ -54,11 +56,12 @@ const Pagination: React.FC<PaginationProps> = ({
     return pages.map((page, index) => (
       <Button
         key={index}
+        variant={'group'}
         onClick={() => typeof page === 'number' && handlePageChange(page)}
         disabled={page === '...'}
         className={cn(
-          'w-10 h-10',
-          currentPage === page ? 'bg-gray-600 text-white' : 'bg-white hover:bg-gray-200',
+          'w-auto h-10 min-w-10 px-1',
+          currentPage === page ? 'bg-slate-500 text-white' : 'bg-white hover:bg-slate-200',
         )}
       >
         {page}
@@ -67,9 +70,9 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className='flex items-center space-x-4'>
+    <div className='flex items-center space-x-2'>
       <Select onValueChange={(value) => handlePageLimitChange(Number(value))}>
-        <SelectTrigger className='w-[120px]'>
+        <SelectTrigger className='w-[120px] border-slate-400'>
           <SelectValue placeholder={`${pageLimit}개 보기`} />
         </SelectTrigger>
         <SelectContent>
@@ -78,22 +81,21 @@ const Pagination: React.FC<PaginationProps> = ({
           ))}
         </SelectContent>
       </Select>
-      <span className='text-gray-600 text-sm'>Total {totalPages} pages</span>
-      <div className='flex items-center space-x-2'>
+      <div className='flex border border-slate-400 rounded-md divide-x overflow-hidden'>
         <Button
-          variant='ghost'
+          variant={'group'}
           size='icon'
           onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          disabled={currentPage === 1 || totalPages === 0}
         >
           <ChevronLeft className='w-5 h-5' />
         </Button>
         {renderPageNumbers()}
         <Button
-          variant='ghost'
+          variant={'group'}
           size='icon'
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || totalPages === 0}
         >
           <ChevronRight className='w-5 h-5' />
         </Button>

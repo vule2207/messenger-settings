@@ -49,6 +49,15 @@ export type AvailableUserItemType = {
   device_text: string[];
 };
 
+export interface AccessHistoryResponse<T> extends BaseResponse<T> {
+  attr: {
+    curpage: number;
+    limit: number;
+    maxpage: number;
+    total: string | number;
+  };
+}
+
 export type AccessHistoryItemType = {
   userid: string;
   name: string;
@@ -58,4 +67,35 @@ export type AccessHistoryItemType = {
   remote_ip: string;
   proxy_ip: string;
   lhseq: string;
+};
+
+export type AccessHistoryGetParams = {
+  page: number;
+  limit: number;
+  keyword: string;
+};
+
+export interface AccessHistoryExportResponse<T = any> extends BaseResponse<T> {
+  cn: string;
+  count: string | number;
+  from: any;
+  to: any;
+  keyword: boolean;
+  lang: string;
+  page: number;
+  time: number;
+  total: string | number;
+}
+
+export interface AccessHistoryExportCheckResponse<T = any> extends AccessHistoryExportResponse<T> {
+  percent: string | number;
+  file: string;
+}
+
+export type AccessHistoryExportParamsType = {
+  page: number;
+  limit: number;
+  total: boolean;
+  count: number;
+  keyword?: string;
 };
