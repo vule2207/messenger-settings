@@ -1,6 +1,8 @@
 import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE, TIME_SETTINGS_VALUE } from '@/types/enums';
 import { DuplicateLogInDataType } from '@/types';
 import { TimeOptionsType } from '@/types';
+import { ExpandDataType, useGetOrgData } from '@/hooks/useGetOrgData';
+import { optimizeDepartments } from '@/utils';
 
 // auth
 export const URL_LOGIN = '/sign/auth';
@@ -58,6 +60,9 @@ export const apiURL = {
   availableUsersList: {
     list: 'admin/messenger/list_user_logged',
   },
+  kickOutUsers: {
+    org: 'admin/admintree/org',
+  },
 };
 
 // time options
@@ -97,3 +102,26 @@ export const cronTimeOptions: TimeOptionsType<CRON_TIME_VALUE>[] = [
     label: 'admin_messenger_del_transferfile_cron_time_op_a_month',
   },
 ];
+
+export const orgConfig = {
+  init: {
+    getParams: ({ keyword = '' }) => ({
+      contact: 1,
+      keyword: keyword ? keyword : undefined,
+      tree: 'dynatree',
+    }),
+    getValues: optimizeDepartments,
+    api: useGetOrgData,
+  },
+  expand: {
+    getParams: ({ idURL = '' }: ExpandDataType) => {
+      return {
+        contact: 0,
+        tree: 'dynatree',
+        idURL: idURL,
+      };
+    },
+    getValues: optimizeDepartments,
+    api: useGetOrgData,
+  },
+};

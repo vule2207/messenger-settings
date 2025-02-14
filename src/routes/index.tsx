@@ -12,6 +12,7 @@ const LockOffTimePage = lazy(() => import('@/pages/LockOffTime'));
 const DuplicateLogInPage = lazy(() => import('@/pages/DuplicateLogIn'));
 const DeleteTransferFilePage = lazy(() => import('@/pages/DeleteTransferFile'));
 const AvailableUsersListPage = lazy(() => import('@/pages/AvailableUsersList'));
+const KickOutUsersPage = lazy(() => import('@/pages/KickOutUsers'));
 
 export const routes = [
   {
@@ -63,7 +64,7 @@ export const routes = [
     title: 'kick_out_users',
     subTitle: 'setting_for_kick_out_permission',
     path: 'messenger/kickoutuser',
-    element: <>Setting Permission for Kick-Out</>,
+    element: <KickOutUsersPage />,
   },
 ];
 

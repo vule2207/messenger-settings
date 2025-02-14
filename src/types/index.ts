@@ -1,3 +1,4 @@
+import { TreeNode } from 'primereact/treenode';
 import { BaseResponse } from './api';
 import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE } from './enums';
 
@@ -99,3 +100,95 @@ export type AccessHistoryExportParamsType = {
   count: number;
   keyword?: string;
 };
+
+export type OrgTreeParamsType = {
+  contact: number;
+  tree: string;
+  keyword?: string;
+  idURL?: string;
+};
+
+export interface DepartmentType extends TreeNode {
+  isFolder: true;
+  isLazy: boolean;
+  children?: UserType[] | DepartmentType[];
+  hasChildren?: boolean;
+  share?: boolean;
+  key?: string;
+  no?: string | number;
+  type?: string;
+  id?: string;
+  fid?: string;
+  leaf?: boolean;
+  name?: string;
+  text?: string;
+  cn?: string | number;
+  country?: string;
+  dept_type?: string | number;
+  email?: string;
+  eng_name?: string;
+  eng_short?: string;
+  expand?: boolean;
+  fulldept?: string;
+  gmail?: string;
+  groupmail?: string;
+  groupname?: string;
+  groupno?: string | number;
+  head?: string | number;
+  receipt?: string | number;
+  seq?: string | number;
+  title?: string;
+  up?: string | number;
+  // parentDepartment to keep trach it parent folder
+  parentDepartment?: DepartmentType;
+  seqno?: string | number;
+  userno?: string;
+  userNo?: string;
+  isbase?: boolean;
+  fldseq?: string;
+  pos?: string;
+  top?: string;
+  mobile?: string;
+  name2?: string;
+  isRoot?: boolean;
+  isFavorite?: boolean;
+  [x: string]: any; // for other data type
+}
+
+export interface UserType extends TreeNode {
+  id: string;
+  type?: string;
+  isFolder?: boolean;
+  userno: string | number;
+  username: string;
+  longname?: string;
+  key?: string;
+  cn?: string | number;
+  duty?: string;
+  dutyno?: string | number;
+  email?: string;
+  fax?: string;
+  fulldept?: string;
+  fullname?: string;
+  fullrank?: string;
+  groupname?: string;
+  groupno?: string | number;
+  ishead?: string | number;
+  long?: string;
+  mobile?: string | number;
+  name?: string;
+  position?: string | number;
+  rankno?: string | number;
+  seqno?: string;
+  title?: string;
+  no?: string;
+  kind?: string;
+  fa_auth?: string;
+  [x: string]: any; // for other data type
+}
+
+export type SelectedOrgItemList = {
+  [x: string | number]: SelectedOrgItem;
+};
+
+export type SelectedOrgItem = DepartmentType | UserType;

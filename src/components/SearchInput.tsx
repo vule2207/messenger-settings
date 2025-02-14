@@ -1,4 +1,5 @@
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { debounce } from 'lodash';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -6,15 +7,12 @@ import { useEffect, useState } from 'react';
 export interface SearchInputProps {
   value?: string;
   isSearchByEnter?: boolean;
+  fullWidth?: boolean;
   placeholder?: string;
   onChange: (val: string) => void;
 }
 
-const SearchInput = ({
-  isSearchByEnter = false,
-  placeholder = '검색',
-  onChange,
-}: SearchInputProps) => {
+const SearchInput = ({ isSearchByEnter = false, placeholder = '검색', fullWidth = false, onChange }: SearchInputProps) => {
   const [query, setQuery] = useState('');
 
   const debouncedSearch = debounce((value: string) => {
@@ -37,7 +35,7 @@ const SearchInput = ({
   };
 
   return (
-    <div className='relative w-64'>
+    <div className={cn('relative w-64', { 'w-full': fullWidth })}>
       <Input
         type='text'
         value={query}

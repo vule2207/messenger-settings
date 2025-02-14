@@ -77,7 +77,13 @@ const AccessHistory = () => {
         rows={rows}
         heads={heads}
         footer={footer}
-        searchProps={{ isSearchByEnter: true, onChange: (val) => setKeyword(val) }}
+        searchProps={{
+          isSearchByEnter: true,
+          onChange: (val) => {
+            setKeyword(val);
+            setPaging((prev) => ({ ...prev, currentPage: 1 }));
+          },
+        }}
         paginationProps={{
           ...paging,
           onPageChange: (page) => setPaging((prev) => ({ ...prev, currentPage: page })),

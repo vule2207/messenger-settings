@@ -1,3 +1,6 @@
+import { DepartmentType } from '@/types';
+import { isEmpty } from 'lodash';
+
 export const checkPostmaster = (sessionId: string) => {
   return sessionId && sessionId == 'postmaster';
 };
@@ -47,21 +50,14 @@ export const getGroupwareUrl = () => {
 
 export const TIME_RANGE_CACHE_IMAGE: number = 3;
 
-export const getUserAvatarUrl = (
-  cn: string | number | undefined,
-  no: string | number | undefined,
-  width = 35,
-  height = 35,
-  isThumbnail = false,
-) => {
+export const getUserAvatarUrl = (cn: string | number | undefined, no: string | number | undefined, width = 35, height = 35, isThumbnail = false) => {
   const date = new Date();
   const hour = date.getHours();
   const rootHour = Math.floor(hour / TIME_RANGE_CACHE_IMAGE) * TIME_RANGE_CACHE_IMAGE;
   date.setHours(rootHour, 0, 0, 0);
   return isThumbnail
     ? getGroupwareUrl() + `/org/user/photo/no/${no}/cn/${cn}/thumb/1?t=${date.getTime()}`
-    : getGroupwareUrl() +
-        `/org/user/photo/no/${no}/cn/${cn}/?width=${width}&height=${height}&t=${date.getTime()}`;
+    : getGroupwareUrl() + `/org/user/photo/no/${no}/cn/${cn}/?width=${width}&height=${height}&t=${date.getTime()}`;
 };
 
 export const getContactPhotoUrl = (id: string, file: string) => {
@@ -239,4 +235,27 @@ export const removeDuplicateData = (rows: any[], field: string = 'id') => {
     });
   }
   return newRows;
+};
+
+export const optimizeDepartments = (departments: DepartmentType[] = []) => {
+  const departmentModel = departments.map((item: DepartmentType) => {
+    let itemNew = {
+      ...item,
+      isFolder: item.isFolder || item.type === 'folder',
+      key: item.no === 0 ? '0_0' : item.key || item.id,
+      id: item.key || item.id,
+      // id: uuidv4(),
+      isLazy: item.isLazy || item.leaf === false,
+      title: item.title || item.text || item.name,
+      name: item.title || item.text || item.name,
+      label: item.title || item.text || item.name,
+      leaf: isEmpty(item.children) && item.isLazy ? false : true,
+      icon: item.isFolder ? 'pi pi-folder' : 'pi pi-user',
+    };
+    if (!isEmpty(itemNew.children)) {
+      itemNew.children = optimizeDepartments(itemNew.children as DepartmentType[]);
+    }
+    return itemNew;
+  });
+  return departmentModel;
 };

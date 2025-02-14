@@ -9,7 +9,7 @@ export type MutationOptions<TData> = {
 };
 
 type MutationResult<TData, TVariables> = {
-  mutate: (variables: TVariables) => Promise<void>;
+  mutate: (variables: TVariables, mutateOptions?: MutationOptions<TData>) => Promise<void>;
   isLoading: boolean;
   isError: boolean;
   error: AxiosError | null;
