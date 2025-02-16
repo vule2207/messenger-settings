@@ -1,4 +1,4 @@
-import { DepartmentType } from '@/types';
+import { Department } from '@/types';
 import { isEmpty } from 'lodash';
 
 export const checkPostmaster = (sessionId: string) => {
@@ -237,23 +237,19 @@ export const removeDuplicateData = (rows: any[], field: string = 'id') => {
   return newRows;
 };
 
-export const optimizeDepartments = (departments: DepartmentType[] = []) => {
-  const departmentModel = departments.map((item: DepartmentType) => {
+export const optimizeDepartments = (departments: Department[] = []) => {
+  const departmentModel = departments.map((item: Department) => {
     let itemNew = {
       ...item,
       isFolder: item.isFolder || item.type === 'folder',
       key: item.no === 0 ? '0_0' : item.key || item.id,
       id: item.key || item.id,
-      // id: uuidv4(),
       isLazy: item.isLazy || item.leaf === false,
       title: item.title || item.text || item.name,
       name: item.title || item.text || item.name,
-      label: item.title || item.text || item.name,
-      leaf: isEmpty(item.children) && item.isLazy ? false : true,
-      icon: item.isFolder ? 'pi pi-folder' : 'pi pi-user',
     };
     if (!isEmpty(itemNew.children)) {
-      itemNew.children = optimizeDepartments(itemNew.children as DepartmentType[]);
+      itemNew.children = optimizeDepartments(itemNew.children as Department[]);
     }
     return itemNew;
   });

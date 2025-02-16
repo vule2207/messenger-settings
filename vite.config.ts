@@ -4,6 +4,12 @@ import path from 'path';
 
 // base: '/levu2207/messenger-settings',
 
+// {
+//   babel: {
+//     plugins: ['babel-plugin-react-compiler'],
+//   },
+// }
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],

@@ -1,7 +1,7 @@
 import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE, TIME_SETTINGS_VALUE } from '@/types/enums';
 import { DuplicateLogInDataType } from '@/types';
 import { TimeOptionsType } from '@/types';
-import { ExpandDataType, useGetOrgData } from '@/hooks/useGetOrgData';
+import { ExpandDataType, useGetOrgData, useGetOrgExpandData } from '@/hooks/useGetOrgData';
 import { optimizeDepartments } from '@/utils';
 
 // auth
@@ -18,6 +18,8 @@ export const typograhyClass = {
   titleHeader: 'text-2xl font-bold leading-normal text-slate-700',
   primaryText: 'text-slate-700',
   secondaryText: 'text-slate-500 text-sm',
+  scrollBarStyles:
+    '[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500',
 };
 
 // api url
@@ -106,7 +108,7 @@ export const cronTimeOptions: TimeOptionsType<CRON_TIME_VALUE>[] = [
 export const orgConfig = {
   init: {
     getParams: ({ keyword = '' }) => ({
-      contact: 1,
+      contact: 0,
       keyword: keyword ? keyword : undefined,
       tree: 'dynatree',
     }),
@@ -122,6 +124,6 @@ export const orgConfig = {
       };
     },
     getValues: optimizeDepartments,
-    api: useGetOrgData,
+    api: useGetOrgExpandData,
   },
 };

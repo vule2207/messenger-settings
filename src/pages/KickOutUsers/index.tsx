@@ -5,11 +5,11 @@ import SelectedUsers from './SelectedUsers';
 
 const KickOutUsers = () => {
   return (
-    <div className='w-full h-[calc(100%-112px)] grid grid-cols-12'>
-      <div className='w-full h-full col-span-12 md:col-span-5'>
+    <div className='w-full h-[calc(100%-112px)] flex flex-col md:flex-row gap-2 md:gap-0'>
+      <div className='w-full md:w-[45%] md:h-full h-[500px]'>
         <OrgTree />
       </div>
-      <div className='flex flex-col gap-2 justify-center items-center col-span-12 md:col-span-2'>
+      <div className='flex md:flex-col flex-row gap-2 justify-center items-center w-full md:w-[10%] '>
         <Button variant={'secondary'} className='px-3 text-slate-700'>
           <ChevronsRight />
         </Button>
@@ -17,7 +17,7 @@ const KickOutUsers = () => {
           <ChevronsLeft />
         </Button>
       </div>
-      <div className='col-span-12 md:col-span-5'>
+      <div className='w-full md:w-[45%] md:h-full h-[500px]'>
         <SelectedUsers />
       </div>
     </div>

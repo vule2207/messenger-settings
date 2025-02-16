@@ -1,4 +1,3 @@
-import { TreeNode } from 'primereact/treenode';
 import { BaseResponse } from './api';
 import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE } from './enums';
 
@@ -108,10 +107,10 @@ export type OrgTreeParamsType = {
   idURL?: string;
 };
 
-export interface DepartmentType extends TreeNode {
+export interface Department {
   isFolder: true;
   isLazy: boolean;
-  children?: UserType[] | DepartmentType[];
+  children?: (User | Department)[];
   hasChildren?: boolean;
   share?: boolean;
   key?: string;
@@ -140,7 +139,7 @@ export interface DepartmentType extends TreeNode {
   title?: string;
   up?: string | number;
   // parentDepartment to keep trach it parent folder
-  parentDepartment?: DepartmentType;
+  parentDepartment?: Department;
   seqno?: string | number;
   userno?: string;
   userNo?: string;
@@ -155,7 +154,7 @@ export interface DepartmentType extends TreeNode {
   [x: string]: any; // for other data type
 }
 
-export interface UserType extends TreeNode {
+export interface User {
   id: string;
   type?: string;
   isFolder?: boolean;
@@ -191,4 +190,4 @@ export type SelectedOrgItemList = {
   [x: string | number]: SelectedOrgItem;
 };
 
-export type SelectedOrgItem = DepartmentType | UserType;
+export type SelectedOrgItem = Department | User;
