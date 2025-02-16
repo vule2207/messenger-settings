@@ -242,8 +242,8 @@ export const optimizeDepartments = (departments: Department[] = []) => {
     let itemNew = {
       ...item,
       isFolder: item.isFolder || item.type === 'folder',
-      key: item.no === 0 ? '0_0' : item.key || item.id,
-      id: item.key || item.id,
+      key: item.key || item.seqno || item.id,
+      id: item.id || '',
       isLazy: item.isLazy || item.leaf === false,
       title: item.title || item.text || item.name,
       name: item.title || item.text || item.name,

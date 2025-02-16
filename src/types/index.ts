@@ -132,6 +132,7 @@ export interface Department {
   gmail?: string;
   groupmail?: string;
   groupname?: string;
+  username?: string;
   groupno?: string | number;
   head?: string | number;
   receipt?: string | number;
@@ -140,9 +141,7 @@ export interface Department {
   up?: string | number;
   // parentDepartment to keep trach it parent folder
   parentDepartment?: Department;
-  seqno?: string | number;
-  userno?: string;
-  userNo?: string;
+  seqno?: string;
   isbase?: boolean;
   fldseq?: string;
   pos?: string;
@@ -158,7 +157,7 @@ export interface User {
   id: string;
   type?: string;
   isFolder?: boolean;
-  userno: string | number;
+  userno: string;
   username: string;
   longname?: string;
   key?: string;

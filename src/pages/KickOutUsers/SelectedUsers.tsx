@@ -2,12 +2,12 @@ import { Button } from '@/components/ui/button';
 import { Trash2, User as UserIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UserType } from '@/types/';
+import { User } from '@/types/';
 import useUniqueSet from '@/hooks/useUniqueSet';
 import EmptyData from '@/components/EmptyData';
 import { Input } from '@/components/ui/input';
 
-const sample: UserType[] = [
+const sample: User[] = [
   {
     key: '102_7215_103423',
     title: 'Le Vu - 이수태 (회계)',
@@ -224,14 +224,14 @@ const sample: UserType[] = [
 ];
 
 interface SelectedUsersProps {
-  data: UserType[];
+  data: User[];
 }
 
 const SelectedUsers = ({ data }: SelectedUsersProps) => {
   console.log(data);
   const { t } = useTranslation();
 
-  const { items, add, remove, removeAll } = useUniqueSet<UserType>((user: UserType) => user.key as string, sample);
+  const { items, add, remove, removeAll } = useUniqueSet<User>((user: User) => user.key as string, sample);
   const [selected, setSelected] = useState<string[]>([]);
 
   const handleSave = () => {};

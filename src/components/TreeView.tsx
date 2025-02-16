@@ -20,12 +20,6 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, onToggle, onSelect, parentChe
 
   const { mutate, isLoading } = useGetOrgExpandData<BaseResponse>();
 
-  // useEffect(() => {
-  //   if (node.children) {
-  //     setChildren(node.children);
-  //   }
-  // }, [node]);
-
   useEffect(() => {
     setChecked(parentChecked || false);
     if (parentChecked) {
@@ -44,7 +38,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, onToggle, onSelect, parentChe
   const fetchChildren = () => {
     if (node.isLazy && isEmpty(children)) {
       mutate(
-        { idURL: node.id },
+        { idURL: node.key },
         {
           onSuccess: (res) => {
             if (res && res.success) {
@@ -111,13 +105,35 @@ interface TreeViewProps {
 }
 
 const TreeView: React.FC<TreeViewProps> = ({ data }) => {
-  console.log('data:', data);
+  const [users, setUsers] = useState<{ [x: string]: User }>({});
+  const [depts, setDepts] = useState<{ [x: string]: Department }>({});
+  console.log('Users: ', users);
+  console.log('Depts: ', depts);
+
   const handleToggle = (node: Department | User) => {
     console.log('Toggled node:', node);
   };
 
   const handleSelect = (node: Department | User, checked: boolean) => {
-    console.log('Selected node:', node, 'Checked:', checked);
+    if (node.isFolder) {
+      setDepts((prev) => {
+        if (checked) {
+          return { ...prev, [node.key as string]: node as Department };
+        } else {
+          delete prev?.[node.key as string];
+          return prev;
+        }
+      });
+    } else {
+      setUsers((prev) => {
+        if (checked) {
+          return { ...prev, [node.key as string]: node as User };
+        } else {
+          delete prev?.[node.key as string];
+          return prev;
+        }
+      });
+    }
   };
 
   return (
