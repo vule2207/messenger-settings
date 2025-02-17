@@ -186,7 +186,7 @@ export interface User {
 }
 
 export type SelectedOrgItemList = {
-  [x: string | number]: SelectedOrgItem;
+  [x: string]: SelectedOrgItem;
 };
 
 export type SelectedOrgItem = Department | User;

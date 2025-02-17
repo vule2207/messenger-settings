@@ -1,49 +1,52 @@
 import { orgConfig, typograhyClass } from '@/constants';
+import { useGetOrgData } from '@/hooks/useGetOrgData';
 import { Department, SelectedOrgItem, SelectedOrgItemList } from '@/types';
 import { BaseResponse } from '@/types/api';
-import { Users } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import Loader from '../Loader';
-import SearchInput from '../SearchInput';
-import TreeNode from './TreeNode';
-import { useGetOrgData } from '@/hooks/useGetOrgData';
-import TreeView from './TreeView';
 import { optimizeDepartments } from '@/utils';
+import { Loader, Users } from 'lucide-react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Tree } from 'react-arborist';
+import { useTranslation } from 'react-i18next';
+import SearchInput from '../SearchInput';
+import Node from './Node';
+import OrgContext, { OrgProvider } from './OrgContext';
+import OrgTree from './OrgTree';
 
-interface OrgTreeProps {
-  onChangeDepts?: (depts: SelectedOrgItemList) => void;
-  onChangeUsers?: (users: SelectedOrgItemList) => void;
+interface OrgTreeV2Props {
+  onChangeSelectDept: (depts: SelectedOrgItemList) => void;
+  onChangeSelectUser: (users: SelectedOrgItemList) => void;
+  sizes?: {
+    rowHeight?: number;
+    overscanCount?: number;
+    width?: number | string;
+    height?: number;
+    indent?: number;
+    paddingTop?: number;
+    paddingBottom?: number;
+    padding?: number;
+  };
 }
 
-const OrgTree = ({ onChangeDepts, onChangeUsers }: OrgTreeProps) => {
+const OrgTreeV2 = (props: OrgTreeV2Props) => {
+  const { onChangeSelectDept, onChangeSelectUser, sizes } = props;
   const { t } = useTranslation();
-  const [keyword, setKeyword] = useState('');
 
-  const { data, isLoading, refetch } = useGetOrgData<BaseResponse<SelectedOrgItem[]>>(orgConfig.init.getParams({ keyword }), { enabled: false });
-
-  useEffect(() => {
-    refetch();
-  }, [keyword]);
+  const [keyword, setKeyword] = useState<string>('');
 
   return (
-    <div className='w-full h-full bg-white border rounded-2xl overflow-hidden flex flex-col !text-sm'>
-      <div className='px-4 h-[50px] bg-slate-700 text-white items-center flex gap-2 font-semibold'>
-        <Users />
-        {t('hr_org_tree')}
-      </div>
-      <div className='p-4 flex flex-col gap-3 !h-[calc(100%-50px)]'>
-        <SearchInput fullWidth isSearchByEnter onChange={(val) => setKeyword(val)} />
-        <div className={`h-full overflow-y-auto ${typograhyClass.scrollBarStyles}`}>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <TreeView data={optimizeDepartments(data?.rows as Department[])!} onChangeDepts={onChangeDepts} onChangeUsers={onChangeUsers} />
-          )}
+    <OrgProvider onChangeSelectDept={onChangeSelectDept} onChangeSelectUser={onChangeSelectUser}>
+      <div className='w-full h-full bg-white border rounded-2xl overflow-hidden flex flex-col !text-sm'>
+        <div className='px-4 h-[50px] bg-slate-700 text-white items-center flex gap-2 font-semibold'>
+          <Users />
+          {t('hr_org_tree')}
+        </div>
+        <div className='p-4 flex flex-col gap-3 !h-[calc(100%-50px)]'>
+          <SearchInput fullWidth isSearchByEnter onChange={(val) => setKeyword(val)} />
+          <OrgTree keyword={keyword} />
         </div>
       </div>
-    </div>
+    </OrgProvider>
   );
 };
 
-export default OrgTree;
+export default OrgTreeV2;

@@ -53,18 +53,16 @@ const KickOutUsers = () => {
   };
 
   const handleChangeDepts = (depts: SelectedOrgItemList) => {
-    console.log('depts:', depts);
     setDepts((prev) => ({ ...prev, ...depts }));
   };
   const handleChangeUsers = (users: SelectedOrgItemList) => {
-    console.log('users:', users);
     setUsers((prev) => ({ ...prev, ...users }));
   };
 
   return (
     <div className='w-full h-[calc(100%-112px)] flex flex-col md:flex-row gap-2 md:gap-0'>
       <div className='w-full md:w-[45%] md:h-full h-[500px]'>
-        <OrgTree onChangeDepts={handleChangeDepts} onChangeUsers={handleChangeUsers} />
+        <OrgTree onChangeSelectDept={handleChangeDepts} onChangeSelectUser={handleChangeUsers} />
       </div>
       <div className='flex md:flex-col flex-row gap-2 justify-center items-center w-full md:w-[10%]'>
         <Button variant={'default'} className='px-3' disabled={isLoading} onClick={handleAddUsers}>

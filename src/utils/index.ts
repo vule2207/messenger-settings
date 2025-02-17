@@ -268,7 +268,7 @@ export const optimizeDepartments = (departments?: Department[]): Department[] | 
   return departmentModel;
 };
 
-export const unCheckedParentFolder = (item: SelectedOrgItem, dept: { [x: string]: Department }) => {
+export const unCheckedParentFolder = (item: SelectedOrgItem, dept: { [x: string]: SelectedOrgItem }) => {
   if (isEmpty(item) || isEmpty(dept)) return null;
   const isContactItem = !isNumber(parseInt(item?.key as string));
   const isParent = item?.up !== '0' || (item?.up !== '0' && isContactItem);
