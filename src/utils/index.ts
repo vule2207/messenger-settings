@@ -1,5 +1,5 @@
-import { Department } from '@/types';
-import { isEmpty } from 'lodash';
+import { Department, SelectedOrgItem, User } from '@/types';
+import { isEmpty, isNumber } from 'lodash';
 
 export const checkPostmaster = (sessionId: string) => {
   return sessionId && sessionId == 'postmaster';
@@ -237,13 +237,25 @@ export const removeDuplicateData = (rows: any[], field: string = 'id') => {
   return newRows;
 };
 
-export const optimizeDepartments = (departments: Department[] = []) => {
-  const departmentModel = departments.map((item: Department) => {
+export const generateUUID = () => {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
+};
+
+export const optimizeDepartments = (departments?: Department[]): Department[] | undefined => {
+  if (!departments) return;
+  const departmentModel = departments.map((item) => {
     let itemNew = {
       ...item,
+      nodeId: generateUUID(),
+      isRoot: item.no === 0,
       isFolder: item.isFolder || item.type === 'folder',
-      key: item.key || item.seqno || item.id,
-      id: item.id || '',
+      key: item.isFolder ? item.key || item.id : item.seqno || item.id,
       isLazy: item.isLazy || item.leaf === false,
       title: item.title || item.text || item.name,
       name: item.title || item.text || item.name,
@@ -254,4 +266,27 @@ export const optimizeDepartments = (departments: Department[] = []) => {
     return itemNew;
   });
   return departmentModel;
+};
+
+export const unCheckedParentFolder = (item: SelectedOrgItem, dept: { [x: string]: Department }) => {
+  if (isEmpty(item) || isEmpty(dept)) return null;
+  const isContactItem = !isNumber(parseInt(item?.key as string));
+  const isParent = item?.up !== '0' || (item?.up !== '0' && isContactItem);
+
+  if (isParent) {
+    const deptKeyArr = Object.keys(dept);
+    const parentDeptIndex = deptKeyArr.findIndex((_key) => {
+      const nKey = _key.split('_');
+      if (item?.isFolder) {
+        return nKey[nKey.length - 1] === (item?.up || item?.serial);
+      } else {
+        return nKey[nKey.length - 1] === (item?.groupno || item?.serial);
+      }
+    });
+    if (parentDeptIndex !== -1) {
+      return deptKeyArr[parentDeptIndex];
+    } else {
+      return null;
+    }
+  }
 };

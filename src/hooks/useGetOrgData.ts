@@ -24,3 +24,12 @@ export function useGetOrgExpandData<TData = any>(opt: MutationOptions<TData> = {
     return axiosGet(url, params);
   }, opt);
 }
+
+export function getUsersInDept<TData = any>(params: any) {
+  let url = apiURL.kickOutUsers.org;
+  if (params.idURL) {
+    url = url + '/' + params.idURL;
+    delete params.idURL;
+  }
+  return axiosGet<TData>(url, params);
+}

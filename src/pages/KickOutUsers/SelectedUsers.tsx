@@ -1,243 +1,85 @@
-import { Button } from '@/components/ui/button';
-import { Trash2, User as UserIcon } from 'lucide-react';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { User } from '@/types/';
-import useUniqueSet from '@/hooks/useUniqueSet';
+import AlertDialog, { AlertDialogProps } from '@/components/AlertDialog';
 import EmptyData from '@/components/EmptyData';
+import Loader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { apiURL, typograhyClass } from '@/constants';
+import { useGetSettings } from '@/hooks/useGetSettings';
+import { useUpdateSettings } from '@/hooks/useUpdateSettings';
+import { SelectedOrgItem, SelectedOrgItemList } from '@/types/';
+import { BaseResponse } from '@/types/api';
+import { isEmpty } from 'lodash';
+import { Trash2, User as UserIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const sample: User[] = [
-  {
-    key: '102_7215_103423',
-    title: 'Le Vu - 이수태 (회계)',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '103423',
-    id: 'vult',
-    email: 'vult@global.hanbiro.com',
-    mobile: '',
-    position: '회계',
-    rankno: '7470',
-    ishead: '0',
-    username: 'Le Vu - 이수태',
-    duty: '',
-    dutyno: '36',
-    fullname: 'Le Vu - 이수태',
-    fulldept: 'ViewGroup',
-    long: 'Le Vu - 이수태 ()',
-    seqno: '102_103423',
-    fax: '',
-    baseGroup: '7215',
-    name: 'Le Vu - 이수태 (회계)',
-  },
-  {
-    key: '102_7215_103572',
-    title: 'GGGGG 1 ',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '103572',
-    id: 'gggg1',
-    email: 'gggg1@global.hanbiro.com',
-    mobile: '',
-    position: '',
-    rankno: '7620',
-    ishead: '0',
-    username: 'GGGGG 1',
-    duty: '',
-    dutyno: '36',
-    fullname: 'GGGG 1',
-    fulldept: 'ViewGroup',
-    long: 'GGGG ()',
-    seqno: '102_103572',
-    fax: '',
-    baseGroup: '7215',
-    name: 'GGGGG 1 ',
-  },
-  {
-    key: '102_7215_102496',
-    title: 'Ngo Luu 17 ',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '102496',
-    id: 'luu17',
-    email: 'luu17@global.hanbiro.com',
-    mobile: '',
-    position: '',
-    rankno: '7620',
-    ishead: '0',
-    username: 'Ngo Luu 17',
-    duty: '',
-    dutyno: '36',
-    fullname: 'Ngo Luu 17',
-    fulldept: 'ViewGroup',
-    long: 'Ngo Luu 17 ()',
-    seqno: '102_102496',
-    fax: '',
-    baseGroup: '7215',
-    name: 'Ngo Luu 17 ',
-  },
-  {
-    key: '102_7215_103560',
-    title: 'Ngo Luu xoa ',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '103560',
-    id: 'xoaxoa',
-    email: 'xoaxoa@global.hanbiro.com',
-    mobile: '',
-    position: '',
-    rankno: '7620',
-    ishead: '0',
-    username: 'Ngo Luu xoa',
-    duty: '',
-    dutyno: '36',
-    fullname: '',
-    fulldept: 'ViewGroup',
-    long: 'Ngo Luu xoa ()',
-    seqno: '102_103560',
-    fax: '',
-    baseGroup: '7215',
-    name: 'Ngo Luu xoa ',
-  },
-  {
-    key: '102_7215_103571',
-    title: 'Ozzzz ',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '103571',
-    id: 'ozzz',
-    email: 'ozzz@global.hanbiro.com',
-    mobile: '',
-    position: '',
-    rankno: '7620',
-    ishead: '0',
-    username: 'Ozzzz',
-    duty: '',
-    dutyno: '36',
-    fullname: 'Ozzzz',
-    fulldept: 'ViewGroup',
-    long: 'Ozzzz ()',
-    seqno: '102_103571',
-    fax: '',
-    baseGroup: '7215',
-    name: 'Ozzzz ',
-  },
-  {
-    key: '102_7215_103606',
-    title: 'm5 ',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '103606',
-    id: 'm5',
-    email: 'm5@global.hanbiro.com',
-    mobile: '',
-    position: '',
-    ishead: '0',
-    username: 'm5',
-    duty: '',
-    dutyno: '',
-    fullname: '',
-    fulldept: 'ViewGroup',
-    long: 'm5 ()',
-    seqno: '102_103606',
-    fax: '',
-    baseGroup: '7215',
-    name: 'm5 ',
-  },
-  {
-    key: '102_7215_103608',
-    title: 'test241101!! ',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '103608',
-    id: 'test241101',
-    email: 'test241101@global.hanbiro.com',
-    mobile: '',
-    position: '',
-    ishead: '0',
-    username: 'test241101!!',
-    duty: '',
-    dutyno: '',
-    fullname: '',
-    fulldept: 'ViewGroup',
-    long: 'test241101!! ()',
-    seqno: '102_103608',
-    fax: '',
-    baseGroup: '7215',
-    name: 'test241101!! ',
-  },
-  {
-    key: '102_7215_103609',
-    title: 'test241101 ',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '103609',
-    id: 'test2411012',
-    email: 'test2411012@global.hanbiro.com',
-    mobile: '',
-    position: '',
-    ishead: '0',
-    username: 'test241101',
-    duty: '',
-    dutyno: '',
-    fullname: '',
-    fulldept: 'ViewGroup',
-    long: 'test241101 ()',
-    seqno: '102_103609',
-    fax: '',
-    baseGroup: '7215',
-    name: 'test241101 ',
-  },
-  {
-    key: '102_7215_102493',
-    title: 'Ngo Luu 14 (책임약사)',
-    groupno: '7215',
-    cn: '102',
-    groupname: 'ViewGroup',
-    userno: '102493',
-    id: 'luu14',
-    email: 'luu14@global.hanbiro.com',
-    mobile: '',
-    position: '책임약사',
-    rankno: '7190',
-    ishead: '0',
-    username: 'Ngo Luu 14',
-    duty: '123 English Name',
-    dutyno: '7',
-    fullname: 'Ngo Luu 14',
-    fulldept: 'ViewGroup',
-    long: 'Ngo Luu 14 ()',
-    seqno: '102_102493',
-    fax: '',
-    baseGroup: '7215',
-    name: 'Ngo Luu 14 (책임약사)',
-  },
-];
+type SaveKickOutParamsType = {
+  usercn: string;
+  userno: string;
+  userid: string;
+};
 
 interface SelectedUsersProps {
-  data: User[];
+  data: SelectedOrgItemList;
 }
 
 const SelectedUsers = ({ data }: SelectedUsersProps) => {
-  console.log(data);
   const { t } = useTranslation();
 
-  const { items, add, remove, removeAll } = useUniqueSet<User>((user: User) => user.key as string, sample);
+  const [items, setItems] = useState<SelectedOrgItemList>({});
   const [selected, setSelected] = useState<string[]>([]);
+  const [alertData, setAlertData] = useState<Omit<AlertDialogProps, 'setOpen'>>({
+    open: false,
+    title: '',
+    content: '',
+  });
 
-  const handleSave = () => {};
+  const { data: userData, isLoading } = useGetSettings<BaseResponse<SelectedOrgItem[]>>(apiURL.kickOutUsers.list);
+
+  const { mutate, isLoading: isSaveLoading } = useUpdateSettings<BaseResponse<any>, { users: SaveKickOutParamsType[] }>(
+    apiURL.kickOutUsers.saveKickOutUsers,
+  );
+
+  useEffect(() => {
+    if (userData && userData.success) {
+      let nItems: SelectedOrgItemList = {};
+      userData.rows?.forEach((row) => {
+        nItems[row.seqno as string] = { ...row, key: row.seqno };
+      });
+      setItems(nItems);
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    const nItems = { ...items };
+    Object.values(data).forEach((item) => {
+      if (!nItems.hasOwnProperty(item.key as string)) {
+        nItems[item.key as string] = item;
+      }
+    });
+    setItems(nItems);
+  }, [data]);
+
+  const handleSave = () => {
+    const params = Object.values(items).map((item) => ({
+      usercn: item.cn as string,
+      userno: item.userno as string,
+      userid: item.id as string,
+    }));
+    mutate(
+      { users: params },
+      {
+        onSuccess: (res) => {
+          if (res && res.success) {
+            setAlertData({ open: true, title: t('alert_success_msg'), content: res.msg || '' });
+          }
+        },
+      },
+    );
+  };
 
   const handleSelectAll = (checked: boolean) => {
-    setSelected(() => (checked ? items.map((item) => item.key as string) : []));
+    setSelected(() => (checked ? Object.values(items).map((item) => item.key as string) : []));
   };
 
   const handleSelectItem = (checked: boolean, val: string) => {
@@ -254,59 +96,93 @@ const SelectedUsers = ({ data }: SelectedUsersProps) => {
 
   const renderUserList = () => {
     return (
-      <div className='flex flex-col text-sm'>
-        <div className='px-2 h-[32px] border-b bg-slate-100 flex justify-between items-center'>
-          <div className='flex gap-2 items-center'>
+      <div className='h-full flex flex-col text-sm'>
+        <div className='px-4 border-b bg-slate-100 flex justify-between items-center'>
+          <div className='h-12 flex gap-2 items-center'>
             <Input
               id='select-all'
               type='checkbox'
               className='w-4 h-4 cursor-pointer'
               onChange={(e) => handleSelectAll(e.target.checked)}
-              checked={items.every((item) => selected.includes(item.key as string))}
+              checked={Object.values(items).every((item) => selected.includes(item.key as string))}
             />
-            <label htmlFor='select-all' className='w-full cursor-pointer'>
+            <label htmlFor='select-all' className='cursor-pointer'>
               {t('timecard_time_checkall_msg')}
             </label>
           </div>
-          {selected.length > 0 && <Trash2 className='w-5 h-5 text-slate-500' />}
+          {selected.length > 0 && (
+            <Trash2
+              className='w-5 h-5 text-slate-500 cursor-pointer'
+              onClick={() => {
+                const nItems = { ...items };
+                selected.forEach((key) => {
+                  delete nItems[key];
+                });
+                setItems(nItems);
+                setSelected([]);
+              }}
+            />
+          )}
         </div>
 
-        <div className='flex flex-col flex-1 overflow-y-auto'>
-          {items.map((item) => (
-            <div key={item.key} className='h-[30px] px-2 flex gap-2 items-center hover:bg-slate-50'>
-              <Input
-                type='checkbox'
-                className='w-4 h-4 cursor-pointer'
-                id={`select-${item.key}`}
-                checked={selected.includes(item.key as string)}
-                onChange={(e) => handleSelectItem(e.target.checked, item.key as string)}
-              />
-              <label htmlFor={`select-${item.key}`} className='w-full cursor-pointer truncate'>
-                {item.name}
-              </label>
-            </div>
-          ))}
+        <div className={`h-[calc(100%-48px)] py-3 flex flex-col overflow-y-auto ${typograhyClass.scrollBarStyles}`}>
+          <div>
+            {Object.values(items).map((item) => (
+              <div key={item.key} className='h-[30px] px-4 flex gap-2 items-center hover:bg-slate-50'>
+                <Input
+                  type='checkbox'
+                  className='w-4 h-4 cursor-pointer'
+                  id={`select-${item.key}`}
+                  checked={selected.includes(item.key as string)}
+                  onChange={(e) => handleSelectItem(e.target.checked, item.key as string)}
+                />
+                <label htmlFor={`select-${item.key}`} className='w-full cursor-pointer truncate'>
+                  {item.name}
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
   };
 
   return (
-    <div className='w-full h-full bg-white border rounded-2xl overflow-hidden flex flex-col'>
-      <div className='px-4 h-[50px] bg-slate-700 text-white flex items-center gap-2 font-semibold'>
-        <UserIcon />
-        {t('holiday_adminreg_menu')}
+    <>
+      <div className='w-full h-full bg-white border rounded-2xl overflow-hidden flex flex-col'>
+        <div className='px-4 h-[50px] bg-slate-700 text-white flex items-center gap-2 font-semibold'>
+          <UserIcon />
+          {t('holiday_adminreg_menu')}
+        </div>
+        <div className='h-[calc(100%-100px)]'>{isLoading ? <Loader /> : <>{isEmpty(items) ? <EmptyData /> : <>{renderUserList()}</>}</>}</div>
+        <div className='h-[50px] flex border-t border-slate-200 bg-slate-100 justify-center items-center gap-3 py-2'>
+          <Button variant={'default'} className='w-[80px]' size={'sm'} onClick={handleSave} disabled={isSaveLoading}>
+            {t('common_save_msg')}
+          </Button>
+          <Button
+            size={'sm'}
+            variant={'secondary'}
+            className='w-[80px]'
+            disabled={isSaveLoading}
+            onClick={() => {
+              setItems({});
+              setSelected([]);
+            }}
+          >
+            {t('common_reset')}
+          </Button>
+        </div>
       </div>
-      <div className='flex-1'>{items.length === 0 ? <EmptyData /> : <>{renderUserList()}</>}</div>
-      <div className='flex border-t border-slate-200 bg-slate-100 justify-center items-center gap-3 py-2'>
-        <Button variant={'default'} className='w-[80px]' size={'sm'} onClick={handleSave}>
-          {t('common_save_msg')}
-        </Button>
-        <Button variant={'secondary'} className='w-[80px]' size={'sm'} onClick={removeAll}>
-          {t('common_reset')}
-        </Button>
-      </div>
-    </div>
+
+      {alertData.open && (
+        <AlertDialog
+          open={alertData.open}
+          title={alertData.title}
+          content={alertData.content}
+          setOpen={(val) => setAlertData((prev) => ({ ...prev, open: val }))}
+        />
+      )}
+    </>
   );
 };
 

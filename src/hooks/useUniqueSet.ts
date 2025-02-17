@@ -1,7 +1,14 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 function useUniqueSet<T>(keyExtractor: (item: T) => string, initialItems: T[] = []) {
   const [items, setItems] = useState<Set<T>>(new Set(initialItems));
+
+  useEffect(() => {
+    setItems(() => {
+      const newSet = new Set(initialItems);
+      return newSet;
+    });
+  }, [initialItems]);
 
   const add = useCallback((item: T) => {
     setItems((prev) => {

@@ -1,7 +1,6 @@
+import { ExpandDataType, getUsersInDept, useGetOrgData, useGetOrgExpandData } from '@/hooks/useGetOrgData';
+import { DuplicateLogInDataType, TimeOptionsType } from '@/types';
 import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE, TIME_SETTINGS_VALUE } from '@/types/enums';
-import { DuplicateLogInDataType } from '@/types';
-import { TimeOptionsType } from '@/types';
-import { ExpandDataType, useGetOrgData, useGetOrgExpandData } from '@/hooks/useGetOrgData';
 import { optimizeDepartments } from '@/utils';
 
 // auth
@@ -63,7 +62,10 @@ export const apiURL = {
     list: 'admin/messenger/list_user_logged',
   },
   kickOutUsers: {
+    list: 'admin/messenger/get_admin_messenger',
     org: 'admin/admintree/org',
+    getUsersinDept: 'org/tree/org',
+    saveKickOutUsers: 'admin/messenger/save_kick_out_user',
   },
 };
 
@@ -125,5 +127,17 @@ export const orgConfig = {
     },
     getValues: optimizeDepartments,
     api: useGetOrgExpandData,
+  },
+  user: {
+    getParams: ({ idURL = '' }: ExpandDataType) => {
+      return {
+        contact: 0,
+        sub: true,
+        idURL: idURL,
+        selectGroupbExpanded: false,
+        tree: 'dynatree',
+      };
+    },
+    api: getUsersInDept,
   },
 };
