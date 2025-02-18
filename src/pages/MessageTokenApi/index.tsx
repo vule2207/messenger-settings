@@ -17,6 +17,7 @@ import { BaseResponse } from '@/types/api';
 import useAlert from '@/hooks/useAlert';
 import WriteUserModal from './WriteUserModal';
 import { Input } from '@/components/ui/input';
+import UseStatus from './UseStatus';
 
 const MessageTokenApi = () => {
   const { t } = useTranslation();
@@ -44,6 +45,37 @@ const MessageTokenApi = () => {
     { page: paging.currentPage, limit: paging.pageLimit, keyword },
     { enabled: false },
   );
+
+  const { mutate: updateUserStatus, isLoading: isLoadingUserStatus } = useUpdateSettings<BaseResponse, any>(apiURL.messageTokenApi.users.update);
+  const { mutate: updateRoomStatus, isLoading: isLoadingRoomStatus } = useUpdateSettings<BaseResponse, any>(apiURL.messageTokenApi.rooms.update);
+
+  const handleUpdateStatus = (item: MessageRoomItemType, val: string, type: MESSAGE_TOKEN_API_TABS) => {
+    if (type === MESSAGE_TOKEN_API_TABS.USERS) {
+      const params = {
+        apiuserno: item.apiuserno,
+        use: val,
+      };
+      updateUserStatus(params, {
+        onSuccess: (res) => {
+          if (res && res.success) {
+            refetch();
+          }
+        },
+      });
+    } else {
+      const params = {
+        apiroomno: item.apiroomno,
+        use: val,
+      };
+      updateRoomStatus(params, {
+        onSuccess: (res) => {
+          if (res && res.success) {
+            refetch();
+          }
+        },
+      });
+    }
+  };
 
   useEffect(() => {
     if (data && data.success && data.rows) {
@@ -100,7 +132,7 @@ const MessageTokenApi = () => {
             { content: user.room_name },
             { content: user.room_key },
             { content: user.token },
-            { content: user.use },
+            { content: <UseStatus value={user.use} onChange={(val) => handleUpdateStatus(user, val, MESSAGE_TOKEN_API_TABS.ROOMS)} /> },
             {
               content: (
                 <div
@@ -140,7 +172,7 @@ const MessageTokenApi = () => {
               ),
             },
             { content: user.username as string },
-            { content: user.use },
+            { content: <UseStatus value={user.use} onChange={(val) => handleUpdateStatus(user, val, MESSAGE_TOKEN_API_TABS.USERS)} /> },
             {
               content: (
                 <div
@@ -186,7 +218,7 @@ const MessageTokenApi = () => {
           setList([]);
         }}
       />
-      {isLoading && <LoadingOverlay />}
+      {(isLoading || isLoadingUserStatus || isLoadingRoomStatus) && <LoadingOverlay />}
       <BaseTable
         isSearch
         isPagination
