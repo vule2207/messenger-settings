@@ -1,16 +1,11 @@
 import { ReactElement } from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from './ui/table';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from './ui/table';
 import EmptyData from './EmptyData';
 import SearchInput, { SearchInputProps } from './SearchInput';
 import Pagination, { PaginationProps } from './Pagination';
+import { Button } from './ui/button';
+import { Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export type TableHeadType = {
   className?: string;
@@ -30,6 +25,8 @@ export type TableRowType = {
 };
 
 interface BaseTableProps {
+  isDelete?: boolean;
+  onDelete?: () => void;
   heads: TableHeadType[];
   rows: TableRowType[];
   tableClassName?: string;
@@ -48,14 +45,24 @@ const BaseTable = ({
   tableClassName = '',
   isSearch = false,
   searchProps,
+  onDelete,
+  isDelete = false,
   isPagination = false,
   paginationProps,
   headerRightButton,
 }: BaseTableProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className='h-full flex flex-col gap-2'>
       <div className='flex justify-between items-center'>
         {isSearch && searchProps && <SearchInput {...searchProps} />}
+        {isDelete && (
+          <Button variant={'default'} className='px-3 min-w-[100px]' onClick={onDelete}>
+            <Trash2 />
+            {t('common_delete_msg')}
+          </Button>
+        )}
         {headerRightButton && headerRightButton}
       </div>
       <Table className={tableClassName}>
@@ -79,12 +86,7 @@ const BaseTable = ({
                 <TableRow className={row.className} key={i}>
                   {row.columns.map((td, j) => {
                     return (
-                      <TableCell
-                        colSpan={td?.colSpan ?? 1}
-                        rowSpan={td?.rowSpan ?? 1}
-                        className={`${td?.className}`}
-                        key={j}
-                      >
+                      <TableCell colSpan={td?.colSpan ?? 1} rowSpan={td?.rowSpan ?? 1} className={`${td?.className}`} key={j}>
                         {td.content}
                       </TableCell>
                     );

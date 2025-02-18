@@ -72,8 +72,9 @@ export const apiURL = {
   },
   messageTokenApi: {
     users: {
-      list: 'messenger/message_api_user',
+      list: 'admin/messenger/message_api_user',
       update: 'admin/messenger/message_api_save_update_user',
+      delete: 'admin/messenger/message_api_delete_user',
     },
     rooms: {
       list: 'admin/messenger/message_api_room',

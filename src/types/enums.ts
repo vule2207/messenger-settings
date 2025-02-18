@@ -23,3 +23,8 @@ export enum MESSAGE_TOKEN_API_TABS {
   USERS = 'users',
   ROOMS = 'rooms',
 }
+
+export enum WRITE_MODE {
+  ADD = 'add',
+  UPDATE = 'update',
+}

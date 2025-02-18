@@ -110,6 +110,7 @@ export type MessageRoomItemType = {
   token: string;
   updated_on: string;
   use: string;
+  username?: string;
 };
 
 export type OrgTreeParamsType = {

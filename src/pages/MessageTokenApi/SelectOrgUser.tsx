@@ -4,15 +4,17 @@ import { Button } from '@/components/ui/button';
 import { typograhyClass } from '@/constants';
 import { cn } from '@/lib/utils';
 import { SelectedOrgItem, SelectedOrgItemList } from '@/types';
+import { WRITE_MODE } from '@/types/enums';
 import { Users } from 'lucide-react';
 import { useState } from 'react';
 
 interface SelectOrgUserProps {
-  value?: SelectedOrgItemList;
+  value?: any[];
+  mode: WRITE_MODE;
   onChange: (value: SelectedOrgItemList) => void;
 }
 
-const SelectOrgUser = ({ value, onChange }: SelectOrgUserProps) => {
+const SelectOrgUser = ({ value, mode, onChange }: SelectOrgUserProps) => {
   const [openModal, setOpenModal] = useState(false);
   const [values, setValues] = useState<SelectedOrgItemList>({});
 
@@ -24,7 +26,7 @@ const SelectOrgUser = ({ value, onChange }: SelectOrgUserProps) => {
 
   return (
     <>
-      {!value && (
+      {mode === WRITE_MODE.ADD && (
         <div className={cn('min-h-10 w-full border border-slate-200 flex rounded-md')}>
           <div className={cn('flex-1 p-2 max-h-[100px] overflow-y-auto', typograhyClass.scrollBarStyles)}>
             {Object.values(values).map((value) => (
