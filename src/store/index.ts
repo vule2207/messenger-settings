@@ -1,5 +1,14 @@
 import create from 'zustand';
 
+export interface GlobalConfig {
+  admin_interface: {
+    messenger: {
+      message_mysql: boolean;
+      message_token_api: boolean;
+    };
+  };
+}
+
 export interface AuthState {
   isLoggedIn: boolean;
   isCheckingLoggedIn: boolean;
@@ -12,6 +21,8 @@ export interface CurrentMenuState {
 }
 
 interface AppState {
+  globalConfig: GlobalConfig | null;
+  setGlobalConfig: (config: GlobalConfig) => void;
   auth: AuthState;
   setAuth: (auth: AuthState) => void;
   currentMenu?: CurrentMenuState;
@@ -21,6 +32,8 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set) => ({
+  globalConfig: null,
+  setGlobalConfig: (config: GlobalConfig) => set(() => ({ globalConfig: config })),
   // auth state
   auth: {
     isLoggedIn: false,

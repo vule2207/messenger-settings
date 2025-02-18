@@ -2554,5 +2554,18 @@
   "mail_sent_fail": "G\u1eedi th\u1ea5t b\u1ea1i",
   "mail_sent_success": "G\u1eedi th\u00e0nh c\u00f4ng",
   "kick_out_users": "Lo\u1ea1i b\u1ecf ng\u01b0\u1eddi",
-  "setting_for_kick_out_permission": "\u0110\u1eb7t quy\u1ec1n cho lo\u1ea1i b\u1edf ng\u01b0\u1eddi d\u00f9ng <br> (Ch\u1ec9 nh\u1eefng ng\u01b0\u1eddi d\u00f9ng \u0111\u01b0\u1ee3c \u1ee7y quy\u1ec1n m\u1edbi c\u00f3 th\u1ec3 \u0111u\u1ed5i nh\u1eefng ng\u01b0\u1eddi tham gia tr\u00f2 chuy\u1ec7n kh\u00e1c ra kh\u1ecfi ph\u00f2ng tr\u00f2 chuy\u1ec7n.)"
+  "setting_for_kick_out_permission": "\u0110\u1eb7t quy\u1ec1n cho lo\u1ea1i b\u1edf ng\u01b0\u1eddi d\u00f9ng <br> (Ch\u1ec9 nh\u1eefng ng\u01b0\u1eddi d\u00f9ng \u0111\u01b0\u1ee3c \u1ee7y quy\u1ec1n m\u1edbi c\u00f3 th\u1ec3 \u0111u\u1ed5i nh\u1eefng ng\u01b0\u1eddi tham gia tr\u00f2 chuy\u1ec7n kh\u00e1c ra kh\u1ecfi ph\u00f2ng tr\u00f2 chuy\u1ec7n.)",
+  "admin_messenger_token_api_room_name": "T\u00ean ph\u00f2ng",
+  "admin_messenger_token_api_room_key": "M\u00e3 ph\u00f2ng",
+  "admin_messenger_token_api_create_room": "T\u1ea1o ph\u00f2ng",
+  "admin_messenger_token_api_token_user": "T\u00e0i kho\u1ea3n truy c\u1eadp",
+  "admin_messenger_token_api_least_2_users": "Danh s\u00e1ch ph\u1ea3i bao g\u1ed3m \u00edt nh\u1ea5t 2 ng\u01b0\u1eddi d\u00f9ng",
+  "admin_messenger_token_api_first_message": "Tin nh\u1eafn \u0111\u1ea7u ti\u00ean",
+  "admin_messenger_token_api_room_out": "Hu\u1ef7 ph\u00f2ng",
+  "admin_messenger_token_api_create_user": "T\u1ea1o t\u00e0i kho\u1ea3n",
+  "admin_messenger_token_api_title": "API truy c\u1eadp tin nh\u1eafn",
+  "admin_messenger_token_api_token": "M\u00e3 truy c\u1eadp",
+  "hanbirotalk_setting": "C\u1ea5u h\u00ecnh HanbiroTalk",
+  "hide_download_hanbirotalk": "\u1ea8n HanbiroTalk",
+  "hide_download_hanbirotalk2": "\u1ea8n HanbiroTalk\u00b2"
 }

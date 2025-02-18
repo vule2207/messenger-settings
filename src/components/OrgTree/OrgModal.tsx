@@ -1,22 +1,30 @@
-import OrgTree from '@/components/OrgTree';
-import { Button } from '@/components/ui/button';
-import { orgConfig } from '@/constants';
 import { Department, SelectedOrgItem, SelectedOrgItemList } from '@/types';
-import { BaseResponse } from '@/types/api';
-import { optimizeDepartments } from '@/utils';
-import { isEmpty } from 'lodash';
-import { Plus } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import React, { useState, useTransition } from 'react';
+import BaseModal from '../BaseModal';
 import { useTranslation } from 'react-i18next';
-import SelectedUsers from './SelectedUsers';
+import { Button } from '../ui/button';
+import { Plus, Save, X } from 'lucide-react';
+import OrgTree from './';
+import { isEmpty } from 'lodash';
+import { optimizeDepartments } from '@/utils';
+import { BaseResponse } from '@/types/api';
+import { orgConfig } from '@/constants';
+import SelectedUsers from './SelectUsers';
 
-const KickOutUsers = () => {
+interface OrgModalProps {
+  open: boolean;
+  value?: SelectedOrgItemList;
+  onClose: () => void;
+  onChange: (val: SelectedOrgItemList) => void;
+}
+const OrgModal = ({ value, open, onClose, onChange }: OrgModalProps) => {
   const { t } = useTranslation();
+
   const [depts, setDepts] = useState<SelectedOrgItemList>({});
   const [users, setUsers] = useState<SelectedOrgItemList>({});
   // console.log('depts:', depts);
   // console.log('users:', users);
-  const [addUsers, setAddUsers] = useState<SelectedOrgItemList>({});
+  const [addUsers, setAddUsers] = useState<SelectedOrgItemList>(value || {});
 
   const [isLoading, startTransition] = useTransition();
 
@@ -54,8 +62,8 @@ const KickOutUsers = () => {
     });
   };
 
-  return (
-    <div className='w-full h-[calc(100%-112px)] flex flex-col md:flex-row gap-2 md:gap-0'>
+  const Body = (
+    <div className='w-full h-[60vh] flex flex-col md:flex-row gap-2 md:gap-0'>
       <div className='w-full md:w-[45%] md:h-full h-[500px]'>
         <OrgTree onChangeSelectDept={setDepts} onChangeSelectUser={setUsers} />
       </div>
@@ -66,10 +74,19 @@ const KickOutUsers = () => {
         </Button>
       </div>
       <div className='w-full md:w-[45%] md:h-full h-[500px]'>
-        <SelectedUsers data={addUsers} />
+        <SelectedUsers
+          data={addUsers}
+          onClose={onClose}
+          onSave={(val) => {
+            onChange && onChange(val);
+            onClose && onClose();
+          }}
+        />
       </div>
     </div>
   );
+
+  return <BaseModal open={open} onClose={onClose} body={Body} modalClass='sm:max-w-[1000px]' header={<>{t('hr_org_tree')}</>} />;
 };
 
-export default KickOutUsers;
+export default OrgModal;

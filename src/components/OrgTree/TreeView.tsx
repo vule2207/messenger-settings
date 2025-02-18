@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Tree } from 'react-arborist';
-import OrgContext from './OrgContext';
-import { useGetOrgData } from '@/hooks/useGetOrgData';
-import { BaseResponse } from '@/types/api';
-import { Department, SelectedOrgItem } from '@/types';
 import { orgConfig, typograhyClass } from '@/constants';
+import { useGetOrgData } from '@/hooks/useGetOrgData';
+import { Department, SelectedOrgItem } from '@/types';
+import { BaseResponse } from '@/types/api';
 import { optimizeDepartments } from '@/utils';
-import Node from './Node';
+import { useContext, useEffect, useRef } from 'react';
+import { Tree } from 'react-arborist';
 import Loader from '../Loader';
+import Node from './Node';
+import OrgContext from './OrgContext';
 
-export interface OrgTreeProps {
+export interface TreeViewProps {
   keyword?: string;
   sizes?: {
     rowHeight?: number;
@@ -25,7 +25,7 @@ export interface OrgTreeProps {
   openByDefault?: boolean; // Using to open folder by default
 }
 
-const OrgTree = (props: OrgTreeProps) => {
+const TreeView = (props: TreeViewProps) => {
   const { sizes, keyword = '', rootDepartment, openByDefault = false } = props;
 
   const boxRef = useRef<any>(null);
@@ -45,20 +45,20 @@ const OrgTree = (props: OrgTreeProps) => {
   }, [data]);
 
   return (
-    <div className={`h-full overflow-y-auto ${typograhyClass.scrollBarStyles}`}>
+    <div className={`h-full overflow-y-auto`}>
       {isLoading ? (
         <Loader />
       ) : (
         <div ref={boxRef} className='w-full h-full'>
           <Tree
-            selectionFollowsFocus={false}
-            data={treeData}
-            width={'100%'}
-            height={boxRef?.current?.offsetHeight}
             padding={10}
-            className='org-tree-v2'
+            width={'100%'}
+            data={treeData}
+            selectionFollowsFocus={false}
+            height={boxRef?.current?.offsetHeight}
+            className={typograhyClass.scrollBarStyles}
             idAccessor={'nodeId'}
-            {...{ rowHeight: 32, ...sizes }}
+            {...{ rowHeight: 24, ...sizes }}
           >
             {Node}
           </Tree>
@@ -68,4 +68,4 @@ const OrgTree = (props: OrgTreeProps) => {
   );
 };
 
-export default OrgTree;
+export default TreeView;

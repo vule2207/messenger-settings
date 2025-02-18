@@ -1,12 +1,12 @@
-import { MutableRefObject, SyntheticEvent, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { orgConfig } from '@/constants';
+import { useGetOrgExpandData } from '@/hooks/useGetOrgData';
+import { Department, SelectedOrgItem } from '@/types';
+import { BaseResponse } from '@/types/api';
+import { optimizeDepartments } from '@/utils';
+import { ChevronDown, ChevronRight, Folder, User } from 'lucide-react';
+import { MutableRefObject, SyntheticEvent, useContext, useEffect, useMemo, useRef } from 'react';
 import { NodeRendererProps } from 'react-arborist';
 import OrgContext from './OrgContext';
-import { ChevronDown, ChevronRight, Folder, User } from 'lucide-react';
-import { useGetOrgExpandData } from '@/hooks/useGetOrgData';
-import { BaseResponse } from '@/types/api';
-import { Department, SelectedOrgItem } from '@/types';
-import { orgConfig } from '@/constants';
-import { optimizeDepartments } from '@/utils';
 
 export const UNIQUE_ID_KEY = 'nodeId';
 
@@ -58,9 +58,6 @@ const selectOrDeselectAllChildren = (node: any, type: 'deselect' | 'selectMulti'
 const Node = (props: NodeRendererProps<any>) => {
   const { node, style, dragHandle, tree } = props;
   const { isLazy, children, key } = node.data;
-  const uniqueId = node.data?.[UNIQUE_ID_KEY];
-  // State
-  const [enableLoadData, setEnableLoadData] = useState<boolean>(false);
 
   // Ref
   const inputRef: any = useRef(null);
@@ -88,7 +85,6 @@ const Node = (props: NodeRendererProps<any>) => {
           if (res && res.rows && res.rows?.length > 0) {
             const nTreeData = getNewTreeData([...treeData], node.data?.[UNIQUE_ID_KEY], optimizeDepartments(res.rows as Department[]));
             setTreeData(nTreeData);
-            setEnableLoadData(false);
             node.open();
           }
         },
@@ -96,39 +92,34 @@ const Node = (props: NodeRendererProps<any>) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (currentKeyword !== keyword) {
-  //     tree.deselectAll();
-  //     setCurrentKeyword(keyword);
-  //   }
-  // }, [keyword]);
-
-  // auto checked if it is in checked list
+  // auto checked if parent is selected
   useEffect(() => {
     if (node.parent?.isSelected) {
-      node.selectMulti();
+      if (!node.isSelected) {
+        node.selectMulti();
+      }
     }
   }, [node.parent?.isSelected]);
 
-  // Handle get data user/dept when checked during expand/not expand
-  const { depts, users } = useMemo(() => {
+  useEffect(() => {
     let depts: any = {};
     let users: any = {};
+    if (node.parent && !node.parent.isSelected) {
+      if (node.parent?.children?.every((child) => child.isSelected)) {
+        node.parent.select();
+      }
+    }
     tree.selectedNodes.forEach((node: any) => {
       if (node.data.isFolder) {
-        depts[node?.[UNIQUE_ID_KEY]] = node.data;
+        depts[node?.data?.key] = node.data;
       } else {
-        users[node?.[UNIQUE_ID_KEY]] = node.data;
+        users[node?.data?.seqno] = node.data;
       }
     });
-    return { depts, users };
-  }, [tree.selectedNodes]);
 
-  // Handle auto change data user/dept when checked during expand/not expand >>> Case: Previous checked data is not in expand list
-  useEffect(() => {
     onChangeSelectDept && onChangeSelectDept(depts);
     onChangeSelectUser && onChangeSelectUser(users);
-  }, [depts, users]);
+  }, [node.isSelected]);
 
   const handleChecked = (event: any) => {
     event.stopPropagation();
@@ -142,10 +133,6 @@ const Node = (props: NodeRendererProps<any>) => {
         selectOrDeselectAllChildren(node, 'deselect');
       }
     } else {
-      // if (expandOnCheck) {
-      //   node.isInternal && node.toggle();
-      //   lazyLoad();
-      // }
       node.selectMulti();
       if (node.parent && node.parent.level !== -1) {
         if (isCheckedAllChildren(node.parent, tree.selectedNodes) && isAllChildGetParent) {
@@ -156,22 +143,10 @@ const Node = (props: NodeRendererProps<any>) => {
         selectOrDeselectAllChildren(node, 'selectMulti');
       }
     }
-
-    let depts: any = {};
-    let users: any = {};
-    tree.selectedNodes.forEach((node: any) => {
-      if (node.data.isFolder) {
-        depts[node?.data?.[UNIQUE_ID_KEY]] = node.data;
-      } else {
-        users[node?.data?.[UNIQUE_ID_KEY]] = node.data;
-      }
-    });
-    onChangeSelectDept && onChangeSelectDept(depts);
-    onChangeSelectUser && onChangeSelectUser(users);
   };
 
   return (
-    <div className='h-6 flex items-center cursor-pointer' style={style}>
+    <div className='h-6 flex items-center cursor-pointer' style={style} onClick={(e) => e.stopPropagation()}>
       {hasChildren || departmentHasChildren ? (
         <div
           className='w-6 flex justify-center items-center'

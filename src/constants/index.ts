@@ -1,6 +1,7 @@
+import { TabItem } from '@/components/HeaderTabs';
 import { ExpandDataType, getUsersInDept, useGetOrgData, useGetOrgExpandData } from '@/hooks/useGetOrgData';
 import { DuplicateLogInDataType, TimeOptionsType } from '@/types';
-import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE, TIME_SETTINGS_VALUE } from '@/types/enums';
+import { CRON_TIME_VALUE, DUPLICATE_LOGIN_VALUE, MESSAGE_TOKEN_API_TABS, TIME_SETTINGS_VALUE } from '@/types/enums';
 import { optimizeDepartments } from '@/utils';
 
 // auth
@@ -10,6 +11,7 @@ export const URL_GET_APP_INFO = '/common/config/mode/all';
 export const URL_CHANGE_EXPIRED_PASSWORD = '/sign/security';
 export const COOKIES_HMAIL_KEY = 'hmail_key';
 export const COOKIES_HANBIRO_GW = 'HANBIRO_GW';
+export const COOKIES_HANBIRO_GW_SESSION = 'gwsession';
 export const LOCAL_STORAGE_TOKEN = 'auth.token';
 
 // typography
@@ -23,6 +25,7 @@ export const typograhyClass = {
 
 // api url
 export const apiURL = {
+  globalConfig: 'main/config/mode/global',
   titleSettings: {
     data: 'admin/messenger/title',
     save: 'admin/messenger/title_save',
@@ -67,6 +70,17 @@ export const apiURL = {
     getUsersinDept: 'org/tree/org',
     saveKickOutUsers: 'admin/messenger/save_kick_out_user',
   },
+  messageTokenApi: {
+    users: {
+      list: 'messenger/message_api_user',
+      update: 'admin/messenger/message_api_save_update_user',
+    },
+    rooms: {
+      list: 'admin/messenger/message_api_room',
+      update: 'admin/messenger/message_api_save_update_room',
+      delete: 'admin/messenger/message_api_delete_room',
+    },
+  },
 };
 
 // time options
@@ -105,6 +119,11 @@ export const cronTimeOptions: TimeOptionsType<CRON_TIME_VALUE>[] = [
     value: CRON_TIME_VALUE.A_MONTH,
     label: 'admin_messenger_del_transferfile_cron_time_op_a_month',
   },
+];
+
+export const messageTabs: TabItem[] = [
+  { id: MESSAGE_TOKEN_API_TABS.USERS, label: 'messenger_history_user' },
+  { id: MESSAGE_TOKEN_API_TABS.ROOMS, label: 'admin_report_rooms' },
 ];
 
 export const orgConfig = {

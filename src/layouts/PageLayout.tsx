@@ -1,9 +1,11 @@
 import AppSidebar from '@/components/AppSidebar';
 import { Button } from '@/components/ui/button';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { typograhyClass } from '@/constants';
+import { apiURL, typograhyClass } from '@/constants';
+import { useGetSettings } from '@/hooks/useGetSettings';
 import { routes } from '@/routes';
-import { useAppStore } from '@/store';
+import { GlobalConfig, useAppStore } from '@/store';
+import { BaseResponse } from '@/types/api';
 import { RefreshCcw } from 'lucide-react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +14,17 @@ import { Outlet, useLocation } from 'react-router-dom';
 const PageLayout = () => {
   const { pathname } = useLocation();
   const { t } = useTranslation();
-  const { currentMenu, setCurrentMenu, setRefresh } = useAppStore();
+  const { setGlobalConfig, currentMenu, setCurrentMenu, setRefresh } = useAppStore();
 
   const showRefreshBtn = ['usersloggedin', 'accesshistory'].some((item) => pathname.includes(item));
+
+  const { data, isLoading } = useGetSettings<BaseResponse<GlobalConfig>>(apiURL.globalConfig);
+
+  useEffect(() => {
+    if (data && data.success && data.rows) {
+      setGlobalConfig(data.rows);
+    }
+  }, [data]);
 
   useEffect(() => {
     const cMenu = routes.find((route) => pathname.includes(route.path));

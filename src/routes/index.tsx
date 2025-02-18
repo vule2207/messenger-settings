@@ -13,6 +13,8 @@ const DuplicateLogInPage = lazy(() => import('@/pages/DuplicateLogIn'));
 const DeleteTransferFilePage = lazy(() => import('@/pages/DeleteTransferFile'));
 const AvailableUsersListPage = lazy(() => import('@/pages/AvailableUsersList'));
 const KickOutUsersPage = lazy(() => import('@/pages/KickOutUsers'));
+const MessageTokenApiPage = lazy(() => import('@/pages/MessageTokenApi'));
+const HanbiroTalkSettingsPage = lazy(() => import('@/pages/HanbiroTalkSettings'));
 
 export const routes = [
   {
@@ -66,6 +68,16 @@ export const routes = [
     path: 'messenger/kickoutuser',
     element: <KickOutUsersPage />,
   },
+  {
+    title: 'admin_messenger_token_api_title',
+    path: 'messenger/message_token_api',
+    element: <MessageTokenApiPage />,
+  },
+  // {
+  //   title: 'hanbirotalk_setting',
+  //   path: 'messenger/hanbiroTalkSetting',
+  //   element: <HanbiroTalkSettingsPage />,
+  // },
 ];
 
 function AppRoutes() {

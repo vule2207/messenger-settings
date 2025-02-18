@@ -2554,5 +2554,18 @@
   "mail_sent_fail": "Send Fail",
   "mail_sent_success": "Sent Success",
   "kick_out_users": "Kick-out Users",
-  "setting_for_kick_out_permission": "Setting Permission for Kick-Out<br>(Only authorized users can kick out other chat participants from the chat room.)"
+  "setting_for_kick_out_permission": "Setting Permission for Kick-Out<br>(Only authorized users can kick out other chat participants from the chat room.)",
+  "admin_messenger_token_api_room_name": "Room name",
+  "admin_messenger_token_api_room_key": "Room key",
+  "admin_messenger_token_api_create_room": "Create room",
+  "admin_messenger_token_api_token_user": "Token user",
+  "admin_messenger_token_api_least_2_users": "List must consist of at least 2 users",
+  "admin_messenger_token_api_first_message": "First message",
+  "admin_messenger_token_api_room_out": "Room out",
+  "admin_messenger_token_api_create_user": "Create user",
+  "admin_messenger_token_api_title": "Message token api",
+  "admin_messenger_token_api_token": "Token",
+  "hanbirotalk_setting": "HanbiroTalk setting",
+  "hide_download_hanbirotalk": "Hide download HanbiroTalk",
+  "hide_download_hanbirotalk2": "Hide download HanbiroTalk\u00b2"
 }

@@ -100,6 +100,18 @@ export type AccessHistoryExportParamsType = {
   keyword?: string;
 };
 
+export type MessageRoomItemType = {
+  apiroomno: string;
+  apiuserno: string;
+  created_on: string;
+  description: string;
+  room_key: string;
+  room_name: string;
+  token: string;
+  updated_on: string;
+  use: string;
+};
+
 export type OrgTreeParamsType = {
   contact: number;
   tree: string;

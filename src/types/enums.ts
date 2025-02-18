@@ -18,3 +18,8 @@ export enum CRON_TIME_VALUE {
   TWO_WEEKS = 14,
   A_MONTH = 30,
 }
+
+export enum MESSAGE_TOKEN_API_TABS {
+  USERS = 'users',
+  ROOMS = 'rooms',
+}

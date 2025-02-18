@@ -11,10 +11,7 @@ export const HeadersFormData = {
   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
 };
 
-export type CustomAxiosConfigType = Omit<
-  AxiosRequestConfig,
-  'method' | 'url' | 'headers' | 'responseType' | 'data' | 'params'
->;
+export type CustomAxiosConfigType = Omit<AxiosRequestConfig, 'method' | 'url' | 'headers' | 'responseType' | 'data' | 'params'>;
 
 export const axiosApi = axios.create({
   headers: {
@@ -152,7 +149,7 @@ export async function axiosGet<T, V = any>(
 /**
  * Post Method
  */
-export async function axiosPost<T, V>(
+export async function axiosPost<T, V = any>(
   endPoint: string,
   payload: V,
   headers = {},
@@ -186,13 +183,7 @@ export async function axiosPost<T, V>(
 /**
  * Delete Method
  */
-export async function axiosDel<T>(
-  endPoint: string,
-  payload = {},
-  headers = {},
-  responseType = 'json',
-  customConfig: CustomAxiosConfigType = {},
-) {
+export async function axiosDel<T>(endPoint: string, payload = {}, headers = {}, responseType = 'json', customConfig: CustomAxiosConfigType = {}) {
   let config: AxiosRequestConfig<any> = {
     method: 'DELETE',
     url: endPoint as string,
@@ -220,13 +211,7 @@ export async function axiosDel<T>(
 /**
  * PUT Method
  */
-export async function axiosPut<T>(
-  endPoint: string,
-  payload = {},
-  headers = {},
-  responseType = 'json',
-  customConfig: CustomAxiosConfigType = {},
-) {
+export async function axiosPut<T>(endPoint: string, payload = {}, headers = {}, responseType = 'json', customConfig: CustomAxiosConfigType = {}) {
   let config: AxiosRequestConfig<any> = {
     method: 'PUT',
     url: endPoint as string,
@@ -251,13 +236,7 @@ export async function axiosPut<T>(
   }
 }
 
-export async function axiosPatch<T>(
-  endPoint: string,
-  payload = {},
-  headers = {},
-  responseType = 'json',
-  customConfig: CustomAxiosConfigType = {},
-) {
+export async function axiosPatch<T>(endPoint: string, payload = {}, headers = {}, responseType = 'json', customConfig: CustomAxiosConfigType = {}) {
   let config: AxiosRequestConfig<any> = {
     method: 'PATCH',
     url: endPoint as string,

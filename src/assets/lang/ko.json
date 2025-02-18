@@ -2554,5 +2554,18 @@
   "mail_sent_fail": "\ubc1c\uc1a1\uc2e4\ud328",
   "mail_sent_success": "\ubc1c\uc1a1\uc131\uacf5",
   "kick_out_users": "\uc0ac\uc6a9\uc790 \ub0b4\ubcf4\ub0b4\uae30",
-  "setting_for_kick_out_permission": "\uc0ac\uc6a9\uc790 \ub0b4\ubcf4\ub0b4\uae30 \uad8c\ud55c \uc124\uc815<br>(\uad8c\ud55c\uc774 \ubd80\uc5ec\ub41c \uc0ac\uc6a9\uc790\ub9cc \ub2e4\ub978 \ub300\ud654 \ucc38\uc5ec\uc790\ub97c \ub300\ud654\ubc29\uc5d0\uc11c \ub0b4\ubcf4\ub0bc \uc218 \uc788\uc2b5\ub2c8\ub2e4.)"
+  "setting_for_kick_out_permission": "\uc0ac\uc6a9\uc790 \ub0b4\ubcf4\ub0b4\uae30 \uad8c\ud55c \uc124\uc815<br>(\uad8c\ud55c\uc774 \ubd80\uc5ec\ub41c \uc0ac\uc6a9\uc790\ub9cc \ub2e4\ub978 \ub300\ud654 \ucc38\uc5ec\uc790\ub97c \ub300\ud654\ubc29\uc5d0\uc11c \ub0b4\ubcf4\ub0bc \uc218 \uc788\uc2b5\ub2c8\ub2e4.)",
+  "admin_messenger_token_api_room_name": "\ub8f8\uba85",
+  "admin_messenger_token_api_room_key": "\ub8f8\ud0a4",
+  "admin_messenger_token_api_create_room": "\ub8f8 \ub9cc\ub4e4\uae30",
+  "admin_messenger_token_api_token_user": "\ud1a0\ud070 \uc0ac\uc6a9\uc790",
+  "admin_messenger_token_api_least_2_users": "\ub9ac\uc2a4\ud2b8\ub294 \ucd5c\uc18c \uc0ac\uc6a9\uc790 2\uba85 \uad6c\uc131\ub418\uc5b4\uc57c \ud569\ub2c8\ub2e4",
+  "admin_messenger_token_api_first_message": "\uccab \uba54\uc2dc\uc9c0",
+  "admin_messenger_token_api_room_out": "\ub8f8\uc544\uc6c3",
+  "admin_messenger_token_api_create_user": "\uc0ac\uc6a9\uc790 \ub9cc\ub4e4\uae30",
+  "admin_messenger_token_api_title": "\uba54\uc2dc\uc9c0 \ud1a0\ud070 API",
+  "admin_messenger_token_api_token": "\ud1a0\ud070",
+  "hanbirotalk_setting": "HanbiroTalk \uc124\uc815",
+  "hide_download_hanbirotalk": "HanbiroTalk \ub2e4\uc6b4\ub85c\ub4dc \uc228\uae30\uae30",
+  "hide_download_hanbirotalk2": "HanbiroTalk\u00b2 \ub2e4\uc6b4\ub85c\ub4dc \uc228\uae30\uae30"
 }
