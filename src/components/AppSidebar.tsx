@@ -15,20 +15,23 @@ import { routes } from '@/routes';
 import { useAppStore } from '@/store';
 import { useTranslation } from 'react-i18next';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
+import { useMemo } from 'react';
 
 const AppSidebar = () => {
   const { t } = useTranslation();
-  const { currentMenu } = useAppStore();
+  const { currentMenu, globalConfig } = useAppStore();
+
+  const nRoute = useMemo(
+    () => (globalConfig?.admin_interface?.messenger?.message_token_api ? routes : routes.filter((item) => item.path.includes('message_token_api'))),
+    [globalConfig],
+  );
 
   return (
     <Sidebar className='sidebar-menu'>
       <SidebarContent className='!text-base'>
         <Collapsible defaultOpen className='group/collapsible'>
           <SidebarGroup className='p-2 pl-3'>
-            <SidebarGroupLabel
-              asChild
-              className='border border-transparent hover:border-slate-200 hover:bg-blue-50 transition-all duration-300'
-            >
+            <SidebarGroupLabel asChild className='border border-transparent hover:border-slate-200 hover:bg-blue-50 transition-all duration-300'>
               <CollapsibleTrigger className='flex gap-2 !h-[50px] text-caps_blue'>
                 <ChevronRight className='!size-5 group-data-[state=open]/collapsible:rotate-90' />
                 <MessageCircle className='!size-5' />
@@ -38,7 +41,7 @@ const AppSidebar = () => {
             <CollapsibleContent className='pl-2'>
               <SidebarGroupContent>
                 <SidebarMenu className='pl-4'>
-                  {routes.map((route) => (
+                  {nRoute.map((route) => (
                     <SidebarMenuItem key={route.path} className='py-1'>
                       <SidebarMenuButton
                         isActive={currentMenu?.url === route.path}

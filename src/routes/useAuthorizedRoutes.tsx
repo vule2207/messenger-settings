@@ -17,7 +17,7 @@ export const useAuthorizedRoutes = () => {
         children: [
           {
             index: true,
-            element: <Navigate to={`/messenger/title`} />,
+            element: <Navigate to={`/title`} />,
           },
           ...routes,
         ],

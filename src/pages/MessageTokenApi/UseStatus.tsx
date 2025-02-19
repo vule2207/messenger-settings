@@ -29,7 +29,13 @@ const UseStatus = ({ value, onChange }: UseStatusProps) => {
         </div>
       )}
       {showSelect && (
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover
+          open={open}
+          onOpenChange={(val) => {
+            setOpen(val);
+            setShowSelect(val);
+          }}
+        >
           <PopoverTrigger asChild className='w-[80px] h-7 border-slate-200'>
             <Button variant='outline' role='combobox' aria-expanded={open} className='justify-between'>
               {statusValue ? statusOptions.find((opt) => opt.value === statusValue)?.label : <div className='w-2'></div>}

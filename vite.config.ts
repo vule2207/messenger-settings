@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// base: '/levu2207/messenger-settings',
+// base: '/thanhvu/messenger-settings',
 
 // {
 //   babel: {
@@ -19,7 +19,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/',
+  base: '/thanhvu/messenger-settings',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

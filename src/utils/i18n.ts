@@ -23,7 +23,7 @@ const resources = {
 };
 
 export const getCurrentLang = () => {
-  return Ls.get('hanbiro-lang') ? (Ls.get('hanbiro-lang') as string) : 'ko';
+  return Ls.get('hanbiro.admin.lang') ? (Ls.get('hanbiro.admin.lang') as string) : 'ko';
 };
 
 i18n.use(initReactI18next).init({

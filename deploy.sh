@@ -3,14 +3,14 @@
 GREEN='\033[0;32m'
 NC='\033[0m'
 echo "${GREEN}============ Starting deployment ============${NC}"
-SSH_USERNAME="levu2207" # Replace your deploy account here
-SSH_HOST="vndev.hanbiro.com" # Replace your server IP here
+SSH_USERNAME="lethanhvu" # Replace your deploy account here
+SSH_HOST="global3.hanbiro.com" # Replace your server IP here
 SSH_PORT=22
 
 DEPLOY_FILE="build-`date +'%Y-%m-%d-%H%M%S'`.zip"
 DEPLOY_SOURCE_LOCAL="./tmp/${DEPLOY_FILE}"
-DEPLOY_SOURCE="/home/levu2207"
-DEPLOY_PATH="/home/HanbiroMailcore/docs/levu2207/messenger-settings/"
+DEPLOY_SOURCE="/home/lethanhvu"
+DEPLOY_PATH="/home/HanbiroMailcore/docs/thanhvu/messenger-settings/"
 
 # -- Login to server via ssh --
 npm run build

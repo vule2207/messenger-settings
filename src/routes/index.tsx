@@ -19,63 +19,63 @@ const HanbiroTalkSettingsPage = lazy(() => import('@/pages/HanbiroTalkSettings')
 export const routes = [
   {
     title: 'approval_messenger_messheadersig',
-    path: 'messenger/title',
+    path: 'title',
     element: <TitleSettingsPage />,
   },
   {
     title: 'approval_messenger_autologonoff',
-    path: 'messenger/autotimepunch',
+    path: 'autotimepunch',
     element: <AutoTimePuchPage />,
   },
   {
     title: 'approval_messenger_loginhistory',
-    path: 'messenger/accesshistory',
+    path: 'accesshistory',
     element: <AccessHistoryPage />,
   },
   {
     title: 'approval_messenger_idletime',
-    path: 'messenger/absencetime',
+    path: 'absencetime',
     element: <AwaySettingsPage />,
   },
   {
     title: 'approval_messenger_locktime',
-    path: 'messenger/locktime',
+    path: 'locktime',
     element: <LockTimePage />,
   },
   {
     title: 'approval_messenger_logofftime',
-    path: 'messenger/logofftime',
+    path: 'logofftime',
     element: <LockOffTimePage />,
   },
   {
     title: 'approval_messenger_duplicatelogin',
-    path: 'messenger/duplicatelogin',
+    path: 'duplicatelogin',
     element: <DuplicateLogInPage />,
   },
   {
     title: 'approval_messenger_deletetransferfile',
-    path: 'messenger/deletetransferfile',
+    path: 'deletetransferfile',
     element: <DeleteTransferFilePage />,
   },
   {
     title: 'approval_messenger_list_users_logedin',
-    path: 'messenger/usersloggedin',
+    path: 'usersloggedin',
     element: <AvailableUsersListPage />,
   },
   {
     title: 'kick_out_users',
     subTitle: 'setting_for_kick_out_permission',
-    path: 'messenger/kickoutuser',
+    path: 'kickoutuser',
     element: <KickOutUsersPage />,
   },
   {
     title: 'admin_messenger_token_api_title',
-    path: 'messenger/message_token_api',
+    path: 'message_token_api',
     element: <MessageTokenApiPage />,
   },
   // {
   //   title: 'hanbirotalk_setting',
-  //   path: 'messenger/hanbiroTalkSetting',
+  //   path: 'hanbiroTalkSetting',
   //   element: <HanbiroTalkSettingsPage />,
   // },
 ];
