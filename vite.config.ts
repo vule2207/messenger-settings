@@ -11,7 +11,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/messenger-settings',
+  base: '/cgwsp',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

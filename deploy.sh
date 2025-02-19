@@ -10,7 +10,7 @@ SSH_PORT=22
 DEPLOY_FILE="build-`date +'%Y-%m-%d-%H%M%S'`.zip"
 DEPLOY_SOURCE_LOCAL="./tmp/${DEPLOY_FILE}"
 DEPLOY_SOURCE="/home/lethanhvu"
-DEPLOY_PATH="/home/HanbiroMailcore/docs/thanhvu/messenger-settings/"
+DEPLOY_PATH="/home/HanbiroMailcore/docs/cgwsp/messenger-settings/"
 
 # -- Login to server via ssh --
 npm run build

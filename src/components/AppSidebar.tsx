@@ -22,7 +22,7 @@ const AppSidebar = () => {
   const { currentMenu, globalConfig } = useAppStore();
 
   const nRoute = useMemo(
-    () => (globalConfig?.admin_interface?.messenger?.message_token_api ? routes : routes.filter((item) => item.path.includes('message_token_api'))),
+    () => (globalConfig?.admin_interface?.messenger?.message_token_api ? routes : routes.filter((item) => !item.path.includes('message_token_api'))),
     [globalConfig],
   );
 
