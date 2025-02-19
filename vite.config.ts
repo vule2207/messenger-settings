@@ -2,14 +2,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// base: '/thanhvu/messenger-settings',
-
-// {
-//   babel: {
-//     plugins: ['babel-plugin-react-compiler'],
-//   },
-// }
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -19,7 +11,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/thanhvu/messenger-settings',
+  base: '/messenger-settings',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
