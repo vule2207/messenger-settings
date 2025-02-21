@@ -13,6 +13,7 @@ export const COOKIES_HMAIL_KEY = 'hmail_key';
 export const COOKIES_HANBIRO_GW = 'HANBIRO_GW';
 export const COOKIES_HANBIRO_GW_SESSION = 'gwsession';
 export const LOCAL_STORAGE_TOKEN = 'auth.token';
+export const COOKIES_HANBIR0_INTEGRATE = 'use_integrate';
 
 // typography
 export const typograhyClass = {

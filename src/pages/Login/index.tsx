@@ -31,7 +31,7 @@ export default function LoginPage() {
       if (res?.success) {
         const result = await loginSuccess(res);
         if (result) {
-          navigate('/');
+          navigate('/', { replace: true });
         } else {
         }
       }
@@ -52,22 +52,11 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className='space-y-4'>
             <div>
               <Label htmlFor='email'>User</Label>
-              <Input
-                id='email'
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                placeholder='Enter user id'
-              />
+              <Input id='email' value={id} onChange={(e) => setId(e.target.value)} placeholder='Enter user id' />
             </div>
             <div>
               <Label htmlFor='password'>Password</Label>
-              <Input
-                id='password'
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder='Enter your password'
-              />
+              <Input id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Enter your password' />
             </div>
             {errorMessage && <p className='text-sm text-red-500 text-center'>{errorMessage}</p>}
             <Button type='submit' className='w-full text-caps_blue' disabled={isLoading}>

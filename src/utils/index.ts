@@ -39,9 +39,9 @@ export const getGroupwareUrl = () => {
   if (isDevelopment()) {
     return import.meta.env.VITE_REACT_APP_BASE_URL || 'https://vndev.hanbiro.com/ngw';
   } else {
-    if (window.location !== window.parent.location) {
-      locationInfo = window.parent.location;
-    }
+    // if (window.location !== window.parent.location) {
+    //   locationInfo = window.parent.location;
+    // }
 
     const { hostname, protocol } = locationInfo;
     return [protocol, '//', hostname, '/ngw'].join('');
